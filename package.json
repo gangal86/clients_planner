@@ -1,9 +1,9 @@
 {
   "name": "clients_planner",
-  "version": "0.0.1",
-  "description": "A Quasar Framework app",
-  "productName": "Quasar App",
-  "author": "Roman Gangal <gangal33@gmail.com>",
+  "version": "1.0.0",
+  "description": "Accounting and working with clients, a schedule for masters",
+  "productName": "Clients Planner",
+  "author": "Roman Gangal https://gangal.pro",
   "private": true,
   "scripts": {
     "lint": "eslint --ext .js,.vue ./",

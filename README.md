@@ -1,6 +1,6 @@
 # Quasar App (clients_planner)
 
-A Quasar Framework app
+Clients Planner
 
 ## Install the dependencies
 ```bash
