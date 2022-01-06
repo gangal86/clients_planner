@@ -49,7 +49,7 @@
           style="width: 160px;"
         >
         <q-list>
-          <q-item clickable>
+          <q-item @click="addClient" clickable>
             <q-item-section>Добавить клиента</q-item-section>
           </q-item>
           <q-separator />
@@ -82,6 +82,7 @@ import { defineComponent, ref} from 'vue';
 import ClientsList from 'components/ClientsList.vue';
 import ServicesList from 'components/ServicesList.vue';
 import Calendar from 'components/Calendar.vue';
+import { useStore } from 'vuex';
 
 export default defineComponent({
   name: 'MainPage',
@@ -91,9 +92,14 @@ export default defineComponent({
     Calendar
   },
   setup () {
+    const store = useStore();
     let mainMenuTabs = ref('clients');
+    const addClient = () => {
+      store.dispatch('storeClients/addClient');
+    }
     return {
-      mainMenuTabs
+      mainMenuTabs,
+      addClient
     }
   }
 });

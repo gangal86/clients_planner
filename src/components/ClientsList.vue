@@ -20,26 +20,20 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue';
-
-const clients = [ {
-  id: 1,
-  name: 'Brunhilde Panswick',
-  date: '12.09.2021',
-  phone: '+380969867432',
-  avatar: 'avatar2.jpg'
-}, {
-  id: 2,
-  name: 'Winfield Stapforth',
-  date: '16.10.2021',
-  phone: '+380976655432',
-  avatar: 'avatar6.jpg'
-} ];
+import { defineComponent, computed } from 'vue';
+import { useStore } from 'vuex';
 
 export default defineComponent({
   name: 'ClientsList',
   setup () {
-    return {clients}
+    const store = useStore();
+    const clients = computed(() => {
+      return store.getters['storeClients/getAllClients'];
+    });
+
+    return {
+      clients
+    }
   }
 });
 </script>
