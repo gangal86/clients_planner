@@ -37,3 +37,9 @@ export default defineComponent({
   }
 });
 </script>
+
+<style lang="scss" scoped>
+  .q-item {
+    padding: 10px 5px;
+  }
+</style>
