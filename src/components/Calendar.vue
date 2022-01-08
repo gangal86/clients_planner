@@ -1,59 +1,62 @@
 <template>
-  <q-splitter
-      v-model="splitterModel"
-      style="height: 450px"
-    >
+  <div class="q-pa-md">
+    <q-date
+      v-model="dateNow"
+      :events="allClientsDates"
+      event-color="orange"
+      @update:model-value="updateCalendar"
+    />
+  </div>
+  {{ dateNow }}
+  <q-dialog v-model="card">
+  <q-card class="my-card">
+    <q-card-section>
+      <q-tab-panels
+        v-model="dateNow"
+        animated
+        transition-prev="jump-up"
+        transition-next="jump-up"
+      >
+      <q-tab-panel v-for="client in allClients" :key="client.id" :name="client.date">
+        <div class="text-h4 q-mb-md">{{ client.date }}</div>
+        <p>{{ client.name }}</p>
+      </q-tab-panel>
+      </q-tab-panels>
+    </q-card-section>
+  </q-card>
+</q-dialog>
 
-      <template v-slot:before>
-        <div class="q-pa-md">
-          <q-date
-            v-model="date"
-            :events="events"
-            event-color="orange"
-          />
-        </div>
-      </template>
-
-      <template v-slot:after>
-        <q-tab-panels
-          v-model="date"
-          animated
-          transition-prev="jump-up"
-          transition-next="jump-up"
-        >
-          <q-tab-panel name="2019/02/01">
-            <div class="text-h4 q-mb-md">2019/02/01</div>
-            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis praesentium cumque magnam odio iure quidem, quod illum numquam possimus obcaecati commodi minima assumenda consectetur culpa fuga nulla ullam. In, libero.</p>
-            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis praesentium cumque magnam odio iure quidem, quod illum numquam possimus obcaecati commodi minima assumenda consectetur culpa fuga nulla ullam. In, libero.</p>
-          </q-tab-panel>
-
-          <q-tab-panel name="2019/02/05">
-            <div class="text-h4 q-mb-md">2019/02/05</div>
-            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis praesentium cumque magnam odio iure quidem, quod illum numquam possimus obcaecati commodi minima assumenda consectetur culpa fuga nulla ullam. In, libero.</p>
-            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis praesentium cumque magnam odio iure quidem, quod illum numquam possimus obcaecati commodi minima assumenda consectetur culpa fuga nulla ullam. In, libero.</p>
-          </q-tab-panel>
-
-          <q-tab-panel name="2019/02/06">
-            <div class="text-h4 q-mb-md">2019/02/06</div>
-            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis praesentium cumque magnam odio iure quidem, quod illum numquam possimus obcaecati commodi minima assumenda consectetur culpa fuga nulla ullam. In, libero.</p>
-            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis praesentium cumque magnam odio iure quidem, quod illum numquam possimus obcaecati commodi minima assumenda consectetur culpa fuga nulla ullam. In, libero.</p>
-            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis praesentium cumque magnam odio iure quidem, quod illum numquam possimus obcaecati commodi minima assumenda consectetur culpa fuga nulla ullam. In, libero.</p>
-          </q-tab-panel>
-        </q-tab-panels>
-      </template>
-    </q-splitter>
 </template>
 
 <script>
-import { defineComponent, ref} from 'vue';
+import { defineComponent, ref, computed} from 'vue';
+import { useStore } from 'vuex';
+import { date } from 'quasar';
 
 export default defineComponent ({
   name: 'Calendar',
   setup () {
+    const store = useStore();
+    let dateNow = ref(date.formatDate(Date.now(), 'YYYY/MM/DD'));
+
+    const allClientsDates = computed(() => store.getters['storeClients/getAllClientsDates']);
+    const allClients = computed(() => store.getters['storeClients/getAllClients']);
+
+    const updateCalendar = (value, reason, details) => {
+      if (reason == 'remove-day') {
+        return true;
+      }
+      return false;
+    }
+
     return {
       splitterModel: ref(50),
-      date: ref('2019/02/01'),
-      events: [ '2019/02/01', '2019/02/05', '2019/02/06' ]
+      card: ref(false),
+      stars: ref(3),
+      dateNow,
+      allClientsDates,
+      allClients,
+      updateCalendar
     }
   }
 });

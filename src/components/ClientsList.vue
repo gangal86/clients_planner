@@ -1,6 +1,6 @@
 <template>
   <q-list>
-    <q-item v-for="client in clients" :key="client.id" class="q-mb-sm" clickable v-ripple>
+    <q-item v-for="client in allClients" :key="client.id" class="q-mb-sm" clickable v-ripple>
       <q-item-section avatar>
         <q-avatar>
           <img :src="`https://cdn.quasar.dev/img/${client.avatar}`">
@@ -27,12 +27,10 @@ export default defineComponent({
   name: 'ClientsList',
   setup () {
     const store = useStore();
-    const clients = computed(() => {
-      return store.getters['storeClients/getAllClients'];
-    });
+    const allClients = computed(() => store.getters['storeClients/getAllClients']);
 
     return {
-      clients
+      allClients
     }
   }
 });
