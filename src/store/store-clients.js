@@ -2,24 +2,24 @@ const state = () => ({
   clients: [ 
     {
       id: 1,
-      name: 'Brunhilde Panswick',
+      name: 'Brunhilde Panswickuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu',
       date: '2022/01/01',
       phone: '+380969867432',
-      avatar: 'avatar2.jpg'
+      service: 'Покраскаhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh'
     }, 
     {
       id: 2,
       name: 'Winfield Stapforth',
       date: '2022/01/07',
       phone: '+380976655432',
-      avatar: 'avatar6.jpg'
+      service: 'Стрижка'
     }, 
     {
       id: 3,
       name: 'Jack Wood',
       date: '2022/01/20',
       phone: '+380976655432',
-      avatar: 'avatar6.jpg'
+      service: 'Прическа'
     }  
   ]
 })
@@ -31,7 +31,7 @@ const mutations = {
       name: 'Bill White',
       date: '2022/01/15',
       phone: '+380976655432',
-      avatar: 'avatar6.jpg'
+      service: 'Покраска'
     });
   }
 }
@@ -48,6 +48,9 @@ const getters = {
   },
   getAllClientsDates(state) {
     return state.clients.map(item => item.date);
+  },
+  getAllClientsServices(state) {
+    return state.clients.map(item => item.service);
   }
 }
 

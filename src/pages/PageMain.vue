@@ -18,7 +18,11 @@
         </q-toolbar-title>
       </q-toolbar>
     </q-header>
-    <q-tab-panels v-model="mainMenuTabs" animated>
+    
+    <q-tab-panels
+      v-model="mainMenuTabs"
+      animated
+    >
           <q-tab-panel class="q-pa-xs" name="clients">
             <ClientsList />
           </q-tab-panel>
@@ -64,17 +68,18 @@
           <q-tabs
             v-model="mainMenuTabs"
             class="text-primary"
+            indicator-color="transparent"
             no-caps
             dense
           >
-          <q-tab name="clients" icon="eva-people-outline" label="Клиенты" />
-          <q-tab name="services" icon="eva-layers-outline" label="Услуги" />
+          <q-tab name="clients" icon="eva-people-outline" label="Клиенты" class="q-pa-xs" />
+          <q-tab name="services" icon="eva-layers-outline" label="Услуги" class="q-pa-sm" />
           <q-btn
             size="lg"
             round
             color="primary"
             icon="eva-plus-outline"
-            class="q-ma-xs"
+            class="q-ma-sm"
           >
             <q-menu
                 transition-show="flip-right"
@@ -91,8 +96,8 @@
               </q-list>
             </q-menu>
           </q-btn> 
-          <q-tab name="calendar" icon="eva-calendar-outline" label="Календарь" />
-          <q-tab name="more" icon="eva-menu-2-outline" label="Больше" />        
+          <q-tab name="calendar" icon="eva-calendar-outline" label="Календарь" class="q-pa-sm" />
+          <q-tab name="more" icon="eva-menu-2-outline" label="Больше" class="q-pa-xs" />        
         </q-tabs>
         </q-toolbar>      
     </q-footer>
@@ -119,6 +124,7 @@ export default defineComponent({
     const addClient = () => {
       store.dispatch('storeClients/addClient');
     }
+    
     return {
       mainMenuTabs,
       addClient

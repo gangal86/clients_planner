@@ -1,19 +1,19 @@
 <template>
-  <q-list>
+  <q-list class="q-my-md">
     <q-item v-for="client in allClients" :key="client.id" class="q-mb-sm" clickable v-ripple>
       <q-item-section avatar>
-        <q-avatar>
-          <img :src="`https://cdn.quasar.dev/img/${client.avatar}`">
+        <q-avatar color="primary" text-color="white">
+          {{ client.name.charAt(0) }}
         </q-avatar>
       </q-item-section>
 
       <q-item-section>
-        <q-item-label class="text-primary">{{ client.name }}</q-item-label>
+        <q-item-label class="text-primary">{{ client.name.substring(0, 20) }}</q-item-label>
         <q-item-label caption lines="1" class="text-dark">{{ client.date }}</q-item-label>
       </q-item-section>
 
       <q-item-section side>
-        <q-item-label class="text-dark">{{ client.phone }}</q-item-label>
+        <q-item-label class="text-dark">{{ client.service.substring(0, 15) }}</q-item-label>
       </q-item-section>
     </q-item>
   </q-list>
@@ -38,6 +38,6 @@ export default defineComponent({
 
 <style lang="scss" scoped>
   .q-item {
-    padding: 10px 5px;
+    padding: 10px 20px;
   }
 </style>
