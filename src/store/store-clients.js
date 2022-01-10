@@ -1,21 +1,18 @@
 const state = () => ({
   clients: [ 
     {
-      id: 1,
       name: 'Brunhilde Panswickuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu',
       date: '2022/01/01',
       phone: '+380969867432',
       service: 'Покраскаhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh'
     }, 
     {
-      id: 2,
       name: 'Winfield Stapforth',
       date: '2022/01/07',
       phone: '+380976655432',
       service: 'Стрижка'
     }, 
     {
-      id: 3,
       name: 'Jack Wood',
       date: '2022/01/20',
       phone: '+380976655432',
@@ -25,20 +22,14 @@ const state = () => ({
 })
 
 const mutations = {
-  addClient(state){
-    state.clients.push({
-      id: 3,
-      name: 'Bill White',
-      date: '2022/01/15',
-      phone: '+380976655432',
-      service: 'Покраска'
-    });
+  addClient(state, payload){
+    state.clients.push(payload);
   }
 }
 
 const actions = {
-  addClient({commit}) {
-    commit('addClient');
+  addClient({commit}, payLoad) {
+    commit('addClient', payLoad);
   }
 }
 

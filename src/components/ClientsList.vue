@@ -1,6 +1,6 @@
 <template>
   <q-list class="q-my-md">
-    <q-item v-for="client in allClients" :key="client.id" class="q-mb-sm" clickable v-ripple>
+    <q-item v-for="(client, index) in allClients" :key="index" class="q-mb-sm" clickable v-ripple>
       <q-item-section avatar>
         <q-avatar color="primary" text-color="white">
           {{ client.name.charAt(0) }}

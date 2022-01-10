@@ -11,17 +11,17 @@
   />
   </div>
   <q-dialog v-model="card">
-  <q-card>
-    <q-card-section>
-      <q-tab-panels v-model="dateNow">
-        <q-tab-panel v-for="client in allClients" :key="client.id" :name="client.date">
-          <div class="text-h4 q-mb-md">{{ client.date }}</div>
-          <p>{{ client.name }}</p>
-        </q-tab-panel>
-      </q-tab-panels>
-    </q-card-section>
-  </q-card>
-</q-dialog>
+    <q-card>
+      <q-card-section>
+        <q-tab-panels v-model="dateNow">
+          <q-tab-panel v-for="client in allClients" :key="client.id" :name="client.date">
+            <div class="text-h4 q-mb-md">{{ client.date }}</div>
+            <p>{{ client.name }}</p>
+          </q-tab-panel>
+        </q-tab-panels>
+      </q-card-section>
+    </q-card>
+  </q-dialog>
 
 </template>
 

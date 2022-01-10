@@ -22,47 +22,86 @@
     <q-tab-panels
       v-model="mainMenuTabs"
       animated
-    >
-          <q-tab-panel class="q-pa-xs" name="clients">
-            <ClientsList />
-          </q-tab-panel>
+>
+      <q-tab-panel class="q-pa-xs" name="clients">
+        <ClientsList />
+      </q-tab-panel>
 
-          <q-tab-panel name="services">
-            <ServicesList />
-          </q-tab-panel>
+      <q-tab-panel name="services">
+        <ServicesList />
+      </q-tab-panel>
 
-          <q-tab-panel name="calendar">
-            <Calendar />
-          </q-tab-panel>
+      <q-tab-panel name="calendar">
+        <Calendar />
+      </q-tab-panel>
 
-          <q-tab-panel name="more">
-            <div class="text-h6">Больше</div>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          </q-tab-panel>
-          <q-btn
-            size="lg"
-            round
-            color="primary"
-            icon="eva-plus-outline"
-            class="absolute-bottom-right q-ma-md z-top"
-          >
-            <q-menu
-                transition-show="flip-right"
-                transition-hide="flip-left"
-                style="width: 160px;"
-              >
-              <q-list>
-                <q-item @click="addClient" clickable>
-                  <q-item-section>Добавить клиента</q-item-section>
-                </q-item>
-                <q-separator />
-                <q-item clickable>
-                  <q-item-section>Добавить услугу</q-item-section>
-                </q-item>
-              </q-list>
-            </q-menu>
-          </q-btn>      
-        </q-tab-panels>
+      <q-tab-panel name="more">
+        <div class="text-h6">Больше</div>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+      </q-tab-panel>     
+    </q-tab-panels>
+
+    <q-dialog v-model="card">
+      <q-card>
+        <q-card-section>
+          <div class="q-pa-md">
+
+            <q-form
+              @submit="onSubmit"
+              @reset="onReset"
+              class="q-gutter-md"
+            >
+              <q-input
+                filled
+                v-model="clientName"
+                label="Имя *"
+                hint="Name and surname"
+                lazy-rules
+                :rules="[ val => val && val.length > 0 || 'Please type something']"
+              />
+
+              <q-input
+                filled
+                v-model="clientService"
+                label="Услуга *"
+                hint="Name and surname"
+                lazy-rules
+                :rules="[ val => val && val.length > 0 || 'Please type something']"
+              />
+
+              <q-input
+                filled
+                v-model="clientPhone"
+                label="Телефон *"
+                hint="Name and surname"
+                lazy-rules
+                :rules="[ val => val && val.length > 0 || 'Please type something']"
+              />
+
+              <q-input filled v-model="clientDate" mask="date" :rules="['date']">
+                <template v-slot:append>
+                  <q-icon name="event" class="cursor-pointer">
+                    <q-popup-proxy ref="qDateProxy" cover transition-show="scale" transition-hide="scale">
+                      <q-date v-model="clientDate">
+                        <div class="row items-center justify-end">
+                          <q-btn v-close-popup label="Close" color="primary" flat />
+                        </div>
+                      </q-date>
+                    </q-popup-proxy>
+                  </q-icon>
+                </template>
+              </q-input>   
+                    
+              <div>
+                <q-btn label="Submit" type="submit" color="primary" @click.prevent="addClient" />
+                <q-btn label="Reset" type="reset" color="primary" flat class="q-ml-sm" />
+              </div>
+            </q-form>
+          </div>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
+
     <q-footer bordered class="bg-white text-grey-9">
         <q-toolbar class="row justify-center">
           <q-tabs
@@ -81,12 +120,12 @@
             icon="eva-plus-outline"
             class="q-ma-sm"
           >
-            <q-menu
-                transition-show="flip-right"
-                transition-hide="flip-left"
-              >
+            <q-menu 
+              :offset="[40, 10]"
+              auto-close
+            >
               <q-list>
-                <q-item @click="addClient" clickable>
+                <q-item @click="card = true" clickable>
                   <q-item-section>Добавить клиента</q-item-section>
                 </q-item>
                 <q-separator />
@@ -121,13 +160,33 @@ export default defineComponent({
   setup () {
     const store = useStore();
     let mainMenuTabs = ref('clients');
+    let card = ref(false)
+    let clientName = ref('');
+    let clientDate = ref('');
+    let clientPhone = ref('');
+    let clientService = ref('');
+
+    let dataClient = {
+      name: clientName,
+      date: clientDate,
+      phone: clientPhone,
+      service: clientService
+    }
+
     const addClient = () => {
-      store.dispatch('storeClients/addClient');
+      store.dispatch('storeClients/addClient', dataClient);
+      card.value = false;
     }
     
     return {
       mainMenuTabs,
-      addClient
+      addClient,
+      card,
+      date: ref('2022/01/10'),
+      clientName,
+      clientDate,
+      clientPhone,
+      clientService
     }
   }
 });
