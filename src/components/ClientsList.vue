@@ -1,7 +1,7 @@
 <template>
   <q-list class="q-my-md">
     <q-item v-for="(client, index) in allClients" :key="index" class="q-mb-sm" clickable v-ripple>
-      <q-item-section avatar>
+      <q-item-section v-if="allClients.length>0" avatar>
         <q-avatar color="primary" text-color="white">
           {{ client.name.charAt(0) }}
         </q-avatar>

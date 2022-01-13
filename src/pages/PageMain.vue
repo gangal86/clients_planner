@@ -46,7 +46,9 @@
         <q-card-section>
           <div class="q-pa-md">
 
-            <q-form class="q-gutter-md">
+            <q-form class="q-gutter-md"
+              @submit="addClient"
+              @reset="clearForm">
               <q-input
                 filled
                 v-model="clientName"
@@ -89,8 +91,8 @@
               </q-input>   
                     
               <div>
-                <q-btn label="Ok" color="primary" @click.prevent="addClient" />
-                <q-btn label="Reset" color="primary" flat class="q-ml-sm" @click="card = false" />
+                <q-btn label="Ok" color="primary" type="submit" />
+                <q-btn label="Reset" color="primary" flat class="q-ml-sm" type="reset" />
               </div>
             </q-form>
           </div>
@@ -157,30 +159,34 @@ export default defineComponent({
   setup () {
     const store = useStore();
     let mainMenuTabs = ref('clients');
-    let card = ref(false)
-    let clientName = ref('');
-    let clientDate = ref(date.formatDate(Date.now(), 'YYYY/MM/DD'));
-    let clientPhone = ref('');
-    let clientService = ref('');
 
-    let dataClient = {
-      name: clientName,
-      date: clientDate,
-      phone: clientPhone,
-      service: clientService
-    }
+    const card = ref(false)
+    const clientName = ref('');
+    const clientService = ref('');
+    const clientPhone = ref('');
+    const clientDate = ref(date.formatDate(Date.now(), 'YYYY/MM/DD'));
 
-    const addClient = () => {
-      store.dispatch('storeClients/addClient', dataClient);
-      card.value = false;
+    
+    const clearForm = () => {
       clientName.value = '';
       clientPhone.value = '';
       clientService.value = '';
     }
+    const addClient = () => {
+      let dataClient = {
+        name: clientName.value,
+        date: clientDate.value,
+        phone: clientPhone.value,
+        service: clientService.value
+      }
+			store.dispatch('storeClients/addClient', dataClient);
+			clearForm()
+			card.value = false;
+		}
     
     return {
       mainMenuTabs,
-      addClient,
+      addClient, clearForm,
       card,
       clientName,
       clientDate,
