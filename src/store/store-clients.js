@@ -1,29 +1,13 @@
+import { LocalStorage } from "quasar";
+
 const state = () => ({
-  clients: [ 
-    {
-      name: 'Brunhilde Panswickuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu',
-      date: '2022/01/01',
-      phone: '+380969867432',
-      service: 'Покраскаhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh'
-    }, 
-    {
-      name: 'Winfield Stapforth',
-      date: '2022/01/07',
-      phone: '+380976655432',
-      service: 'Стрижка'
-    }, 
-    {
-      name: 'Jack Wood',
-      date: '2022/01/20',
-      phone: '+380976655432',
-      service: 'Прическа'
-    }  
-  ]
+  clients: LocalStorage.getItem("clients") !== null? LocalStorage.getItem("clients")["clients"]: []
 })
 
 const mutations = {
   addClient(state, payload){
     state.clients.push(payload);
+    LocalStorage.set("clients", state);
   }
 }
 
@@ -35,7 +19,10 @@ const actions = {
 
 const getters = {
   getAllClients(state) {
-    return state.clients;
+    let clients = [];
+    Object.assign(clients, state.clients);
+    clients = clients.reverse();
+    return clients;
   },
   getAllClientsDates(state) {
     return state.clients.map(item => item.date);

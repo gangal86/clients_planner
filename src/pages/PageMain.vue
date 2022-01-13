@@ -46,11 +46,7 @@
         <q-card-section>
           <div class="q-pa-md">
 
-            <q-form
-              @submit="onSubmit"
-              @reset="onReset"
-              class="q-gutter-md"
-            >
+            <q-form class="q-gutter-md">
               <q-input
                 filled
                 v-model="clientName"
@@ -84,7 +80,7 @@
                     <q-popup-proxy ref="qDateProxy" cover transition-show="scale" transition-hide="scale">
                       <q-date v-model="clientDate">
                         <div class="row items-center justify-end">
-                          <q-btn v-close-popup label="Close" color="primary" flat />
+                          <q-btn v-close-popup label="Ok" color="primary" flat />
                         </div>
                       </q-date>
                     </q-popup-proxy>
@@ -93,8 +89,8 @@
               </q-input>   
                     
               <div>
-                <q-btn label="Submit" type="submit" color="primary" @click.prevent="addClient" />
-                <q-btn label="Reset" type="reset" color="primary" flat class="q-ml-sm" />
+                <q-btn label="Ok" color="primary" @click.prevent="addClient" />
+                <q-btn label="Reset" color="primary" flat class="q-ml-sm" @click="card = false" />
               </div>
             </q-form>
           </div>
@@ -145,10 +141,11 @@
 
 <script>
 import { defineComponent, ref} from 'vue';
+import { useStore } from 'vuex';
+import { date } from 'quasar';
 import ClientsList from 'components/ClientsList.vue';
 import ServicesList from 'components/ServicesList.vue';
 import Calendar from 'components/Calendar.vue';
-import { useStore } from 'vuex';
 
 export default defineComponent({
   name: 'MainPage',
@@ -162,7 +159,7 @@ export default defineComponent({
     let mainMenuTabs = ref('clients');
     let card = ref(false)
     let clientName = ref('');
-    let clientDate = ref('');
+    let clientDate = ref(date.formatDate(Date.now(), 'YYYY/MM/DD'));
     let clientPhone = ref('');
     let clientService = ref('');
 
@@ -176,13 +173,15 @@ export default defineComponent({
     const addClient = () => {
       store.dispatch('storeClients/addClient', dataClient);
       card.value = false;
+      clientName.value = '';
+      clientPhone.value = '';
+      clientService.value = '';
     }
     
     return {
       mainMenuTabs,
       addClient,
       card,
-      date: ref('2022/01/10'),
       clientName,
       clientDate,
       clientPhone,
