@@ -1,34 +1,39 @@
 import { LocalStorage } from "quasar";
 
 const state = () => ({
-  clients: LocalStorage.getItem("clients") !== null? LocalStorage.getItem("clients")["clients"]: []
+  clients: LocalStorage.getItem("clients") !== null? LocalStorage.getItem("clients"): [],
+  services: LocalStorage.getItem("services") !== null? LocalStorage.getItem("services"): []
 })
 
 const mutations = {
   addClient(state, payload){
-    state.clients.push(payload);
-    LocalStorage.set("clients", state);
+    state.clients.unshift(payload);
+    LocalStorage.set('clients', state.clients);
+  },
+  addService(state, payload){
+    state.services.unshift(payload);
+    LocalStorage.set('services', state.services);
   }
 }
 
 const actions = {
   addClient({commit}, payLoad) {
     commit('addClient', payLoad);
+  },
+  addService({commit}, payload) {
+    commit('addService', payload)
   }
 }
 
 const getters = {
   getAllClients(state) {
-    let clients = [];
-    Object.assign(clients, state.clients);
-    clients = clients.reverse();
-    return clients;
+    return state.clients;
   },
   getAllClientsDates(state) {
     return state.clients.map(item => item.date);
   },
   getAllClientsServices(state) {
-    return state.clients.map(item => item.service);
+    return state.services;
   }
 }
 
