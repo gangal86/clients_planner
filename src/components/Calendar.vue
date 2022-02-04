@@ -2,6 +2,7 @@
   <div class="row justify-center">
   <q-date
     v-model="dateNow"
+    mask="DD/MM/YYYY"
     :events="allClientsDates"
     event-color="orange"
     @update:model-value="updateDate"
@@ -10,61 +11,212 @@
     class="col q-ma-md"
   />
   </div>
-  <q-dialog v-model="card">
+  <q-dialog v-model="isDialog">
     <q-card>
       <q-card-section>
-        <q-tab-panels v-model="dateNow">
-          <q-tab-panel v-for="client in allClients" :key="client.id" :name="client.date">
-            <div class="text-h4 q-mb-md">{{ client.date }}</div>
-            <p>{{ client.name }}</p>
-          </q-tab-panel>
-        </q-tab-panels>
+        <div class="text-h6 q-mb-md">{{ dateNow }}</div>
+        <q-btn icon="close" flat round dense v-close-popup />
+        <div class="row justify-center q-mt-md">
+          <q-btn
+            no-caps
+            outline
+            rounded
+            color="primary"
+            icon="add"
+            label="Добавить клиента"
+            @click="showDialog = true"
+          />
+        </div>
+        <q-list separator class="q-my-md">
+          <template v-for="client in allClients" :key="client.id">
+            <q-item v-if="client.date === dateNow" clickable v-ripple>
+              <q-item-section v-if="allClients.length > 0" avatar>
+                <q-avatar color="primary" text-color="white">
+                  {{ client.name.charAt(0) }}
+                </q-avatar>
+              </q-item-section>
+
+              <q-item-section>
+                <q-item-label class="text-primary">{{ client.name.substring(0, 20) }}</q-item-label>
+                <q-item-label caption lines="1" class="text-dark">{{ client.dateCurrentFormat }}</q-item-label>
+              </q-item-section>
+
+              <q-item-section side>
+                <q-item-label class="text-dark">{{ client.service.substring(0, 15) }}</q-item-label>
+              </q-item-section>
+            </q-item>
+          </template>
+        </q-list>
       </q-card-section>
     </q-card>
   </q-dialog>
 
+  <q-dialog v-model="showDialog">
+    <q-card>
+      <q-card-section>
+        <div class="q-pa-md">
+
+          <q-form class="q-gutter-md"
+            @submit="addClient"
+            @reset="resetForm">
+
+            <q-input
+              outlined
+              v-model="clientName"
+              label="Имя *"
+              lazy-rules
+              :rules="[ val => val && val.length > 0 || 'Пожалуйста, введите имя']"
+            />
+
+            <q-select 
+              outlined 
+              v-model="clientService" 
+              :options="servicesOptions" 
+              label="Услуга *"
+              :rules="[ val => val && val.length > 0 || 'Пожалуйста, введите услугу']"
+            />
+
+            <q-input
+              outlined
+              v-model="clientPhone"
+              label="Телефон *"
+              lazy-rules
+              :rules="[ val => val && val.length > 0 || 'Пожалуйста, введите номер телефона']"
+            />
+            
+            <q-input outlined v-model="clientDate">
+              <template v-slot:prepend>
+                <q-icon name="access_time" class="cursor-pointer">
+                  <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                    <q-time v-model="clientDate" :mask="currentDateFormat" format24h>
+                      <div class="row items-center justify-end">
+                        <q-btn v-close-popup label="Close" color="primary" flat />
+                      </div>
+                    </q-time>
+                  </q-popup-proxy>
+                </q-icon>
+              </template>
+
+              <template v-slot:append>
+                <q-icon name="event" class="cursor-pointer">
+                  <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                    <q-date v-model="clientDate" :mask="currentDateFormat">
+                      <div class="row items-center justify-end">
+                        <q-btn v-close-popup label="Close" color="primary" flat />
+                      </div>
+                    </q-date>
+                  </q-popup-proxy>
+                </q-icon>
+              </template>
+            </q-input>
+
+            <div>
+              <q-btn label="Ok" color="primary" type="submit" />
+              <q-btn label="Отмена" color="primary" flat class="q-ml-sm" type="reset" />
+            </div>
+          </q-form>
+        </div>
+      </q-card-section>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script>
-import { defineComponent, ref, computed} from 'vue';
+import { defineComponent, ref, computed, watch} from 'vue';
 import { useStore } from 'vuex';
-import { date } from 'quasar';
+import { date, uid } from 'quasar';
 
 export default defineComponent ({
   name: 'Calendar',
   setup () {
     const store = useStore();
-    let card = ref(false);
-    let dateNow = ref(date.formatDate(Date.now(), 'YYYY/MM/DD'));
-    let calendar = ref();
+    const isDialog = ref(false);
+    const dateNow = ref(date.formatDate(Date.now(), 'DD/MM/YYYY'));
+    const calendar = ref();
+    const showDialog = ref(false);
+    const clientName = ref('');
+    const clientService = ref('');
+    const clientPhone = ref('');
+    const currentDateFormat = 'HH:mm - DD/MM/YYYY';
+    const clientDate = ref(date.formatDate(date.extractDate(dateNow.value, 'DD/MM/YYYY'), currentDateFormat));
+
+    watch(() => dateNow.value, () => {
+      clientDate.value = date.formatDate(date.extractDate(dateNow.value, 'DD/MM/YYYY'), currentDateFormat);
+    });
 
     const allClientsDates = computed(() => store.getters['storeClients/getAllClientsDates']);
-    const allClients = computed(() => store.getters['storeClients/getAllClients']);
+
+    const allClients = computed(() => store.getters['storeClients/getAllClients'].map(function(item) {
+      return {
+        id: item.id,
+        name: item.name,
+        date: date.formatDate(item.date, 'DD/MM/YYYY'),
+        dateCurrentFormat: date.formatDate(`${item.date} ${item.time}`, currentDateFormat),
+        time: item.time,
+        phone: item.phone,
+        service: item.service
+      }
+    }));
 
     const updateDate = (value, reason, details) => {
       if (reason == 'remove-day') {
         setTimeout(() => {
-          calendar.value.setToday ();
+          calendar.value.setToday();
         }, 100);
       }
-      allClientsDates.value.find(item => item === dateNow.value)? card.value = true: card.value = false;
+      allClientsDates.value.find(item => date.formatDate(item, 'DD/MM/YYYY') === dateNow.value)? isDialog.value = true: isDialog.value = false;
     }
 
-    let currentLocale = {
+    const currentLocale = {
         days: 'Воскресенье_Понедельник_Вторник_Среда_Четверг_Пятница_Суббота_Воскресенье'.split('_'),
         daysShort: 'Вс_Пн_Вт_Ср_Чт_Пт_Сб'.split('_'),
         months: 'Январь_Февраль_Март_Апрель_Май_Июнь_Июль_Август_Сентябрь_Октябрь_Ноябрь_Декабрь'.split('_'),
         monthsShort: 'Янв_Фев_Мар_Апр_Май_Июн_Июл_Авг_Сен_Окт_Ноя_Дек'.split('_')
+    }
+
+    const servicesOptions = computed(() => store.getters['storeClients/getAllClientsServices'].map(item => item.name));
+
+    const resetForm = () => {
+      clientName.value = '';
+      clientDate.value = date.formatDate(Date.now(), currentDateFormat);
+      clientPhone.value = '';
+      clientService.value = '';
+      showDialog.value = false;
+    }
+    const addClient = () => {
+      const extractDate = date.extractDate(clientDate.value, currentDateFormat);
+      const formatDateToStore = date.formatDate(extractDate, 'YYYY/MM/DD');
+      const formatTimeToStore = date.formatDate(extractDate, 'HH:mm');
+
+      let dataClient = {
+        id: uid(),
+        name: clientName.value,
+        date: formatDateToStore,
+        time: formatTimeToStore,
+        phone: clientPhone.value,
+        service: clientService.value
       }
+			store.dispatch('storeClients/addClient', dataClient);
+			resetForm();
+		}
 
     return {
-      card,
+      isDialog,
       dateNow,
       allClientsDates,
       allClients,
       calendar,
       updateDate,
-      currentLocale
+      currentLocale,
+      showDialog,
+      clientName,
+      clientPhone,
+      clientDate,
+      clientService,
+      resetForm,
+      addClient,
+      currentDateFormat,
+      servicesOptions
     }
   }
 });

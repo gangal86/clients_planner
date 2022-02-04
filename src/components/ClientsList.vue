@@ -61,21 +61,33 @@
               lazy-rules
               :rules="[ val => val && val.length > 0 || 'Пожалуйста, введите номер телефона']"
             />
+            
+            <q-input outlined v-model="clientDate">
+              <template v-slot:prepend>
+                <q-icon name="access_time" class="cursor-pointer">
+                  <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                    <q-time v-model="clientDate" :mask="currentDateFormat" format24h>
+                      <div class="row items-center justify-end">
+                        <q-btn v-close-popup label="Close" color="primary" flat />
+                      </div>
+                    </q-time>
+                  </q-popup-proxy>
+                </q-icon>
+              </template>
 
-            <q-input outlined v-model="clientDate" mask="date" :rules="['date']">
               <template v-slot:append>
                 <q-icon name="event" class="cursor-pointer">
-                  <q-popup-proxy ref="qDateProxy" cover transition-show="scale" transition-hide="scale">
-                    <q-date v-model="clientDate">
+                  <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                    <q-date v-model="clientDate" :mask="currentDateFormat">
                       <div class="row items-center justify-end">
-                        <q-btn v-close-popup label="Ok" color="primary" flat />
+                        <q-btn v-close-popup label="Close" color="primary" flat />
                       </div>
                     </q-date>
                   </q-popup-proxy>
                 </q-icon>
               </template>
-            </q-input>   
-                  
+            </q-input>
+
             <div>
               <q-btn label="Ok" color="primary" type="submit" />
               <q-btn label="Отмена" color="primary" flat class="q-ml-sm" type="reset" />
@@ -100,37 +112,52 @@ export default defineComponent({
   name: 'ClientsList',
   setup () {
     const store = useStore();
-    const allClients = computed(() => store.getters['storeClients/getAllClients']);
-
     const isDialog = ref(false);
     const isWarningBanner = ref(false);
     const clientName = ref('');
     const clientService = ref('');
     const clientPhone = ref('');
-    const clientDate = ref(date.formatDate(Date.now(), 'YYYY/MM/DD'));
+    const currentDateFormat = 'HH:mm - DD/MM/YYYY';
+    const clientDate = ref(date.formatDate(Date.now(), currentDateFormat));
 
-    let servicesOptions = store.getters['storeClients/getAllClientsServices'].map(item => item.name);
+    const allClients = computed(() => store.getters['storeClients/getAllClients'].map(function(item) {
+      return {
+        id: item.id,
+        name: item.name,
+        date: date.formatDate(`${item.date} ${item.time}`, currentDateFormat),
+        time: item.time,
+        phone: item.phone,
+        service: item.service
+      }
+    }));
+
+    const servicesOptions = computed(() => store.getters['storeClients/getAllClientsServices'].map(item => item.name));
 
     const showDialog = () => {
-      if (servicesOptions.length === 0) {
+      if (servicesOptions.value.length === 0) {
         isWarningBanner.value = true;
         return;
       }
       isDialog.value = true;
     }
 
-    
     const resetForm = () => {
       clientName.value = '';
+      clientDate.value = date.formatDate(Date.now(), currentDateFormat);
       clientPhone.value = '';
       clientService.value = '';
       isDialog.value = false;
     }
     const addClient = () => {
+      const extractDate = date.extractDate(clientDate.value, currentDateFormat);
+      const formatDateToStore = date.formatDate(extractDate, 'YYYY/MM/DD');
+      const formatTimeToStore = date.formatDate(extractDate, 'HH:mm');
+
       let dataClient = {
         id: uid(),
         name: clientName.value,
-        date: clientDate.value,
+        date: formatDateToStore,
+        time: formatTimeToStore,
         phone: clientPhone.value,
         service: clientService.value
       }
@@ -145,12 +172,13 @@ export default defineComponent({
       resetForm,
       isDialog,
       clientName,
-      clientDate,
       clientPhone,
+      clientDate,
       clientService,
       servicesOptions,
       showDialog,
-      isWarningBanner
+      isWarningBanner,
+      currentDateFormat
     }
   }
 });
