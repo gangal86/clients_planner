@@ -156,6 +156,8 @@ export default defineComponent ({
         phone: item.phone,
         service: item.service
       }
+    }).sort(function(a, b) {
+      return new Date(date.formatDate(date.extractDate(a.dateCurrentFormat, currentDateFormat), '2020/01/01 HH:mm')).getTime() > new Date(date.formatDate(date.extractDate(b.dateCurrentFormat, currentDateFormat), '2020/01/01 HH:mm')).getTime() ? 1 : -1;
     }));
 
     const updateDate = (value, reason, details) => {
@@ -178,7 +180,6 @@ export default defineComponent ({
 
     const resetForm = () => {
       clientName.value = '';
-      clientDate.value = date.formatDate(Date.now(), currentDateFormat);
       clientPhone.value = '';
       clientService.value = '';
       showDialog.value = false;
