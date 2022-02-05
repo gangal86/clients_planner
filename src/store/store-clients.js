@@ -13,6 +13,15 @@ const mutations = {
   addService(state, payload){
     state.services.unshift(payload);
     LocalStorage.set('services', state.services);
+  },
+  deleteClient(state, id) {
+    state.clients = state.clients.filter(el => el.id != id);
+    LocalStorage.set('clients', state.clients);
+  },
+  editClient(state, payload) {
+    state.clients = state.clients.filter(el => el.id != payload.id);
+    state.clients.unshift(payload);
+    LocalStorage.set('clients', state.clients);
   }
 }
 
@@ -22,6 +31,12 @@ const actions = {
   },
   addService({commit}, payload) {
     commit('addService', payload)
+  },
+  deleteClient({commit}, id) {
+    commit('deleteClient', id);
+  },
+  editClient({commit}, payload) {
+    commit('editClient', payload);
   }
 }
 
