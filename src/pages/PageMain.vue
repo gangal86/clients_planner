@@ -37,7 +37,16 @@
 
       <q-tab-panel class="q-pa-xs" name="more">
         <div class="text-h6">Больше</div>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          <div class="q-pa-md row items-start q-gutter-md">
+            <q-color v-model="hex" class="my-picker" />
+          </div>
+          <div>
+            <div>Clients Planner</div>
+            <span class="text-weight-regular">Developer: </span>
+            <a href="https://gangal.pro" target="_blank">
+              <span class="text-weight-bold text-primary">Roman Gangal</span>
+            </a>
+          </div>
       </q-tab-panel>     
     </q-tab-panels>
 
@@ -61,10 +70,11 @@
 </template>
 
 <script>
-import { defineComponent, ref} from 'vue';
+import { defineComponent, ref, watch} from 'vue';
 import ClientsList from 'components/ClientsList.vue';
 import ServicesList from 'src/components/ServicesList.vue';
 import Calendar from 'components/Calendar.vue';
+import { setCssVar } from 'quasar'
 
 export default defineComponent({
   name: 'MainPage',
@@ -75,9 +85,15 @@ export default defineComponent({
   },
   setup () {
     let mainMenuTabs = ref('clients');
+    let hex = ref('#7A1FA2');
+    
+    watch(() => hex.value, () => {
+      setCssVar('primary', hex.value);
+    })
 
     return {
-      mainMenuTabs
+      mainMenuTabs,
+      hex
     }
   }
 });
