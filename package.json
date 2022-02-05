@@ -7,7 +7,8 @@
   "private": true,
   "scripts": {
     "lint": "eslint --ext .js,.vue ./",
-    "android-dev": "quasar dev -m cordova -T android"
+    "android-dev": "quasar dev -m cordova -T android",
+    "android-build-apk": "quasar build -m cordova -T android -- --buildConfig=\"../build.cordova.json\" -- --packageType=apk"
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
