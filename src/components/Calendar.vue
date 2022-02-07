@@ -11,64 +11,63 @@
     class="col q-ma-md"
   />
   </div>
-  <q-dialog v-model="isDialog">
-    <q-card>
-      <q-card-section>
-        <div class="text-h6 q-mb-md">{{ dateNow }}</div>
-        <q-btn icon="close" flat round dense v-close-popup />
-        <div class="row justify-center q-mt-md">
-          <q-btn
-            no-caps
-            outline
-            rounded
-            color="primary"
-            icon="add"
-            label="Добавить клиента"
-            @click="showDialog = true"
-          />
-        </div>
-        <q-list separator class="q-my-md">
-          <template v-for="client in allClients" :key="client.id">
-            <q-item v-if="client.date === dateNow" @click="showDialogPreviewClientInfo({id: client.id, name: client.name, date: client.date, dateCurrentFormat: client.dateCurrentFormat, phone: client.phone, service: client.service})" clickable v-ripple>
-              <q-item-section v-if="allClients.length > 0" avatar>
-                <q-avatar color="primary" text-color="white">
-                  {{ client.name.charAt(0) }}
-                </q-avatar>
-              </q-item-section>
 
-              <q-item-section>
-                <q-item-label class="text-primary">{{ client.name.substring(0, 20) }}</q-item-label>
-                <q-item-label caption lines="1" class="text-dark">{{ client.dateCurrentFormat }}</q-item-label>
-              </q-item-section>
+  <q-card v-touch-swipe.mouse.right.left="userHasSwiped">
+    <q-card-section>
+      <div class="text-h6 q-mb-md">{{ dateNow }}</div>
+      <q-btn icon="close" flat round dense v-close-popup />
+      <div class="row justify-center q-mt-md">
+        <q-btn
+          no-caps
+          outline
+          rounded
+          color="primary"
+          icon="add"
+          label="Добавить клиента"
+          @click="showDialog = true"
+        />
+      </div>
+      <q-list separator class="q-my-md">
+        <template v-for="client in allClients" :key="client.id">
+          <q-item v-if="client.date === dateNow" @click="showDialogPreviewClientInfo({id: client.id, name: client.name, date: client.date, dateCurrentFormat: client.dateCurrentFormat, phone: client.phone, service: client.service})" clickable v-ripple>
+            <q-item-section v-if="allClients.length > 0" avatar>
+              <q-avatar color="primary" text-color="white">
+                {{ client.name.charAt(0) }}
+              </q-avatar>
+            </q-item-section>
 
-              <q-item-section side>
-                <q-item-label class="text-dark">{{ client.service.substring(0, 15) }}</q-item-label>
-              </q-item-section>
-            </q-item>
-          </template>
-          <q-dialog v-model="isDialogPreviewClientInfo">
-            <q-card>
-              <q-card-section>
-                <div class="q-pa-md">
-                    Test Card <br />
-                    {{ previewDialogData.id }}<br />
-                    {{ previewDialogData.date }}<br />
-                    {{ previewDialogData.name }}<br />
-                    phone {{ previewDialogData.phone }}<br />
-                    {{ previewDialogData.service }}     
-                </div>
-              </q-card-section>
-                <div>
-                  <q-btn label="Изменить" color="primary" @click="editClient" />
-                  <q-btn label="Удалить" color="primary" @click="deleteClient" />
-                  <q-btn label="Отмена" color="primary" flat class="q-ml-sm" @click="isDialogPreviewClientInfo = false" />
-                </div>
-            </q-card>
-          </q-dialog>
-        </q-list>
-      </q-card-section>
-    </q-card>
-  </q-dialog>
+            <q-item-section>
+              <q-item-label class="text-primary">{{ client.name.substring(0, 20) }}</q-item-label>
+              <q-item-label caption lines="1" class="text-dark">{{ client.dateCurrentFormat }}</q-item-label>
+            </q-item-section>
+
+            <q-item-section side>
+              <q-item-label class="text-dark">{{ client.service.substring(0, 15) }}</q-item-label>
+            </q-item-section>
+          </q-item>
+        </template>
+        <q-dialog v-model="isDialogPreviewClientInfo">
+          <q-card>
+            <q-card-section>
+              <div class="q-pa-md">
+                  Test Card <br />
+                  {{ previewDialogData.id }}<br />
+                  {{ previewDialogData.date }}<br />
+                  {{ previewDialogData.name }}<br />
+                  phone {{ previewDialogData.phone }}<br />
+                  {{ previewDialogData.service }}     
+              </div>
+            </q-card-section>
+              <div>
+                <q-btn label="Изменить" color="primary" @click="editClient" />
+                <q-btn label="Удалить" color="primary" @click="deleteClient" />
+                <q-btn label="Отмена" color="primary" flat class="q-ml-sm" @click="isDialogPreviewClientInfo = false" />
+              </div>
+          </q-card>
+        </q-dialog>
+      </q-list>
+    </q-card-section>
+  </q-card>
 
   <q-dialog v-model="showDialog">
     <q-card>
@@ -218,7 +217,6 @@ export default defineComponent ({
   name: 'Calendar',
   setup () {
     const store = useStore();
-    const isDialog = ref(false);
     const isDialogEdit = ref(false);
     const dateNow = ref(date.formatDate(Date.now(), 'DD/MM/YYYY'));
     const calendar = ref();
@@ -264,7 +262,7 @@ export default defineComponent ({
           calendar.value.setToday();
         }, 100);
       }
-      isDialog.value = true;
+      //isCard.value = true;
       //allClientsDates.value.find(item => date.formatDate(item, 'DD/MM/YYYY') === dateNow.value)? isDialog.value = true: isDialog.value = false;
     }
 
@@ -342,8 +340,20 @@ export default defineComponent ({
 			resetForm();
 		}
 
+    const userHasSwiped = ({ evt, ...newInfo }) => {
+      const formatDate = date.formatDate(date.extractDate(dateNow.value, 'DD/MM/YYYY'), 'YYYY/MM/DD');
+      let currentDate = new Date(formatDate);
+      if (newInfo.direction === 'left') {
+        currentDate.setDate(currentDate.getDate() + 1);
+        dateNow.value = date.formatDate(currentDate, 'DD/MM/YYYY');
+      }
+      if (newInfo.direction === 'right') {
+        currentDate.setDate(currentDate.getDate() - 1);
+        dateNow.value = date.formatDate(currentDate, 'DD/MM/YYYY');
+      }
+    }
+
     return {
-      isDialog,
       dateNow,
       allClientsDates,
       allClients,
@@ -365,7 +375,8 @@ export default defineComponent ({
       deleteClient,
       previewDialogData,
       isDialogEdit,
-      editClientToStore
+      editClientToStore,
+      userHasSwiped
     }
   }
 });
