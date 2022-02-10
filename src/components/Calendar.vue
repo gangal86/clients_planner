@@ -8,15 +8,13 @@
     @update:model-value="updateDate"
     ref="calendar"
     :locale="currentLocale"
-    class="col q-ma-md"
+    class="col q-mt-md q-mx-md"
   />
   </div>
 
-  <q-card v-touch-swipe.mouse.right.left="userHasSwiped">
+  <q-card class="q-mx-md" v-touch-swipe.mouse.right.left="userHasSwiped">
     <q-card-section>
-      <div class="text-h6 q-mb-md">{{ dateNow }}</div>
-      <q-btn icon="close" flat round dense v-close-popup />
-      <div class="row justify-center q-mt-md">
+      <div class="row justify-center">
         <q-btn
           no-caps
           outline
@@ -45,6 +43,11 @@
               <q-item-label class="text-dark">{{ client.service.substring(0, 15) }}</q-item-label>
             </q-item-section>
           </q-item>
+          <template v-for="itemBusyTime in client.busyTime" :key="itemBusyTime">
+          <q-item v-if="client.date === dateNow">
+            <div>{{ itemBusyTime }} Занято</div>
+          </q-item>
+          </template>
         </template>
         <q-dialog v-model="isDialogPreviewClientInfo">
           <q-card>
@@ -249,6 +252,7 @@ export default defineComponent ({
         date: date.formatDate(item.date, 'DD/MM/YYYY'),
         dateCurrentFormat: date.formatDate(`${item.date} ${item.time}`, currentDateFormat),
         time: item.time,
+        busyTime: item.busyTime,
         phone: item.phone,
         service: item.service
       }
@@ -333,6 +337,7 @@ export default defineComponent ({
         name: clientName.value,
         date: formatDateToStore,
         time: formatTimeToStore,
+        busyTime: ['13:00', '14:00', '15:00'],
         phone: clientPhone.value,
         service: clientService.value
       }
@@ -381,9 +386,3 @@ export default defineComponent ({
   }
 });
 </script>
-
-<style lang="scss" scoped>
-  .q-date {
-    max-width: 350px; 
-  }
-</style>

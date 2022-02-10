@@ -36,35 +36,38 @@
       </q-tab-panel>
 
       <q-tab-panel class="q-pa-xs" name="more">
-        <div class="text-h6">Больше</div>
-          <div class="q-pa-md row items-start q-gutter-md">
-            <q-color v-model="hex" class="my-picker" />
+        <div class="column no-wrap justify-center q-mt-md">
+          <div class="column items-center">
+            Изменить цветовую схему
           </div>
-          <div>
+          <div class="q-pa-md column items-center">
+            <q-color v-model="hex" class="no-header no-footer my-picker" />
+          </div>
+          <div class="q-pa-md column items-center">
             <div>Clients Planner</div>
             <span class="text-weight-regular">Developer: </span>
             <a href="https://gangal.pro" target="_blank">
               <span class="text-weight-bold text-primary">Roman Gangal</span>
             </a>
           </div>
+        </div>
       </q-tab-panel>     
     </q-tab-panels>
 
     <q-footer bordered class="bg-white text-grey-9">
-        <q-toolbar class="row justify-center">
-          <q-tabs
-            v-model="mainMenuTabs"
-            class="text-primary"
-            indicator-color="transparent"
-            no-caps
-            dense
-          >
-          <q-tab name="clients" icon="eva-people-outline" label="Клиенты" class="q-pa-xs" />
-          <q-tab name="services" icon="eva-layers-outline" label="Услуги" class="q-pa-sm" />
-          <q-tab name="calendar" icon="eva-calendar-outline" label="Календарь" class="q-pa-sm" />
-          <q-tab name="more" icon="eva-menu-2-outline" label="Больше" class="q-pa-xs" />        
-        </q-tabs>
-        </q-toolbar>      
+        <q-tabs
+          v-model="mainMenuTabs"
+          class="text-primary"
+          indicator-color="transparent"
+          align="center"
+          no-caps
+          dense
+        >
+        <q-tab name="clients" icon="eva-people-outline" label="Клиенты" class="q-pa-xs" />
+        <q-tab name="services" icon="eva-layers-outline" label="Услуги" class="q-pa-sm" />
+        <q-tab name="calendar" icon="eva-calendar-outline" label="Календарь" class="q-pa-sm" />
+        <q-tab name="more" icon="eva-menu-2-outline" label="Больше" class="q-pa-xs" />        
+      </q-tabs>    
     </q-footer>
   </q-page>
 </template>
@@ -74,7 +77,7 @@ import { defineComponent, ref, watch} from 'vue';
 import ClientsList from 'components/ClientsList.vue';
 import ServicesList from 'src/components/ServicesList.vue';
 import Calendar from 'components/Calendar.vue';
-import { setCssVar } from 'quasar'
+import { setCssVar } from 'quasar';
 
 export default defineComponent({
   name: 'MainPage',
@@ -100,14 +103,15 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-  .q-header {
-    max-width: 600px; 
-    margin: 0 auto;
+  .q-tab-panels{
+    width: 100%;
+    max-width: 400px;
+    min-width: 300px;
   }
-  .q-tab-panels {
-    min-width: 400px;
-  }
-  .q-menu {
-    width: 160px;
+  .my-picker{
+    height: 100%;
+    width: 100%;
+    max-width: 400px;
+    min-width: 250px;
   }
 </style>
