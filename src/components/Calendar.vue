@@ -43,11 +43,6 @@
               <q-item-label class="text-dark">{{ client.service.substring(0, 15) }}</q-item-label>
             </q-item-section>
           </q-item>
-          <template v-for="itemBusyTime in client.busyTime" :key="itemBusyTime">
-          <q-item v-if="client.date === dateNow">
-            <div>{{ itemBusyTime }} Занято</div>
-          </q-item>
-          </template>
         </template>
 
       <PreviewClientDialog 
@@ -79,9 +74,9 @@
 import { defineComponent, ref, computed, watch } from 'vue';
 import { useStore } from 'vuex';
 import { date } from 'quasar';
-import AddClientDialog from 'components/AddClientDialog.vue';
-import EditClientDialog from 'components/EditClientDialog.vue';
-import PreviewClientDialog from 'components/PreviewClientDialog.vue';
+import AddClientDialog from 'src/components/dialogs/AddClientDialog.vue';
+import EditClientDialog from 'src/components/dialogs/EditClientDialog.vue';
+import PreviewClientDialog from 'src/components/dialogs/PreviewClientDialog.vue';
 
 export default defineComponent ({
   name: 'Calendar',
@@ -116,7 +111,6 @@ export default defineComponent ({
         date: date.formatDate(item.date, 'DD/MM/YYYY'),
         dateCurrentFormat: date.formatDate(`${item.date} ${item.time}`, currentDateFormat),
         time: item.time,
-        busyTime: item.busyTime,
         phone: item.phone,
         service: item.service
       }

@@ -58,9 +58,9 @@
   import { defineComponent, computed, ref } from 'vue';
   import { useStore } from 'vuex';
   import { date } from 'quasar';
-  import AddClientDialog from 'components/AddClientDialog.vue';
-  import EditClientDialog from 'components/EditClientDialog.vue';
-  import PreviewClientDialog from 'components/PreviewClientDialog.vue';
+  import AddClientDialog from 'src/components/dialogs/AddClientDialog.vue';
+  import EditClientDialog from 'src/components/dialogs/EditClientDialog.vue';
+  import PreviewClientDialog from 'src/components/dialogs/PreviewClientDialog.vue';
 
   export default defineComponent({
     name: 'ClientsList',

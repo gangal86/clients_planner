@@ -24,7 +24,10 @@
       </q-tab-panel>     
     </q-tab-panels>
 
-    <Footer :mainMenuTabs="mainMenuTabs" @change-menu-tabs="mainMenuTabs = $event" />
+    <Footer 
+      :mainMenuTabs="mainMenuTabs" 
+      @change-menu-tabs="mainMenuTabs = $event" 
+    />
 
   </q-page>
 </template>
@@ -34,9 +37,9 @@ import { defineComponent, ref} from 'vue';
 import ClientsList from 'components/ClientsList.vue';
 import ServicesList from 'src/components/ServicesList.vue';
 import Calendar from 'components/Calendar.vue';
-import Header from 'components/Header.vue';
+import Header from 'src/components/shared/Header.vue';
 import More from 'components/More.vue';
-import Footer from 'components/Footer.vue';
+import Footer from 'src/components/shared/Footer.vue';
 
 export default defineComponent({
   name: 'MainPage',

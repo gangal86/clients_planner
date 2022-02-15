@@ -33,7 +33,7 @@
 <script>
 import { defineComponent, ref } from 'vue';
 import { useStore } from 'vuex';
-import AddServiceDialog from 'src/components/AddServiceDialog.vue';
+import AddServiceDialog from 'src/components/dialogs/AddServiceDialog.vue';
 
 export default defineComponent ({
   name: 'ServicesList',
