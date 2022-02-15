@@ -76,7 +76,14 @@ import { date, uid } from 'quasar';
 
 export default defineComponent({
   name: 'AddClientDialog',
-  props: ['modelValue'],
+  props: [
+    'modelValue',
+    'addClientDate'
+  ],
+  emits: [
+    'update:modelValue',
+    'update:addClientDate'
+  ],
   setup(props, context) {
     const store = useStore();
     const isDialog = computed({
@@ -91,7 +98,14 @@ export default defineComponent({
     const clientService = ref('');
     const clientPhone = ref('');
     const currentDateFormat = 'HH:mm - DD/MM/YYYY';
-    const clientDate = ref(date.formatDate(Date.now(), currentDateFormat));
+    const clientDate = computed({
+      get() {
+        return props.addClientDate;
+      },
+      set(val) {
+        context.emit('update:addClientDate', val);
+      }
+    });
 
     const servicesOptions = computed(() => store.getters['storeClients/getAllClientsServices'].map(item => item.name));
 

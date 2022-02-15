@@ -36,7 +36,11 @@
 
   </q-list>
 
-  <AddClientDialog v-model="isDialog" />
+  <AddClientDialog 
+    v-model="isDialog" 
+    :addClientDate="clientDate" 
+    @update:addClientDate="clientDate = $event" 
+  />
 
   <EditClientDialog 
     v-model="isDialogEdit" 
@@ -72,6 +76,7 @@
       const isDialogPreviewClientInfo = ref(false);
       const isWarningBanner = ref(false);
       const currentDateFormat = 'HH:mm - DD/MM/YYYY';
+      const clientDate = ref(date.formatDate(Date.now(), currentDateFormat));
 
       const allClients = computed(() => store.getters['storeClients/getAllClients'].map(function(item) {
         return {
@@ -114,7 +119,8 @@
         isDialogPreviewClientInfo,
         showDialogPreviewClientInfo,
         currentClientId,
-        currentUserData
+        currentUserData,
+        clientDate
       }
     }
   });

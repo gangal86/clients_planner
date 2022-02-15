@@ -129,11 +129,18 @@
       });
       const clientDate = computed({
         get() {
+          if (props.currentUserData.dateCurrentFormat !== undefined) {
+            return props.currentUserData.dateCurrentFormat;
+          }
           return props.currentUserData.date;
         },
         set(val) {
           let copyCurrentUserData = Object.assign({}, props.currentUserData);
-          copyCurrentUserData.date = val;
+          if (copyCurrentUserData.dateCurrentFormat !== undefined) {
+            copyCurrentUserData.dateCurrentFormat = val;
+          }else{
+            copyCurrentUserData.date = val;
+          }
           context.emit('update:currentUserData', copyCurrentUserData);
         }
       });
