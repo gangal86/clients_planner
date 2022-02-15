@@ -27,26 +27,13 @@
         <q-item-label class="text-dark">{{ client.service.substring(0, 15) }}</q-item-label>
       </q-item-section>
     </q-item>
-    <q-dialog v-model="isDialogPreviewClientInfo">
-      <q-card>
-        <template v-for="client in allClients" :key="client.id">
-          <q-card-section v-if="currentClientId == client.id">
-            <div class="q-pa-md">
-                Test Card <br />
-                {{ client.name }}<br />
-                {{ client.service }}<br />
-                {{ client.phone }}<br />
-                {{ client.date }}<br />     
-            </div>
-          </q-card-section>
-        </template>
-          <div>
-            <q-btn label="Изменить" color="primary" @click="editClient" />
-            <q-btn label="Удалить" color="primary" @click="deleteClient" />
-            <q-btn label="Отмена" color="primary" flat class="q-ml-sm" @click="isDialogPreviewClientInfo = false" />
-          </div>
-      </q-card>
-    </q-dialog>
+
+  <PreviewClientDialog 
+    v-model="isDialogPreviewClientInfo" 
+    :currentUserData="currentUserData"
+    @update:isDialogEdit="isDialogEdit = $event"
+  />
+
   </q-list>
 
   <AddClientDialog v-model="isDialog" />
@@ -64,17 +51,19 @@
 </template>
 
 <script>
-  import { defineComponent, computed, ref, reactive } from 'vue';
+  import { defineComponent, computed, ref } from 'vue';
   import { useStore } from 'vuex';
   import { date } from 'quasar';
   import AddClientDialog from 'components/AddClientDialog.vue';
   import EditClientDialog from 'components/EditClientDialog.vue';
+  import PreviewClientDialog from 'components/PreviewClientDialog.vue';
 
   export default defineComponent({
     name: 'ClientsList',
     components: {
       AddClientDialog,
-      EditClientDialog
+      EditClientDialog,
+      PreviewClientDialog
     },
     setup () {
       const store = useStore();
@@ -110,22 +99,11 @@
         isDialog.value = true;
       }
 
-      const editClient = () => {
-        currentUserData.value = allClients.value.find(item => item.id === currentClientId.value);
-        isDialogEdit.value = true;
-      }
-
       const showDialogPreviewClientInfo = (clientId) => {
         isDialogPreviewClientInfo.value = true;
         currentClientId.value = clientId;
+        currentUserData.value = allClients.value.find(item => item.id === currentClientId.value);
       }
-
-      const deleteClient = () => {
-        store.dispatch('storeClients/deleteClient', currentClientId.value)
-        isDialogPreviewClientInfo.value = false;
-      }
-
-
 
       return {
         allClients,
@@ -135,9 +113,7 @@
         isWarningBanner,
         isDialogPreviewClientInfo,
         showDialogPreviewClientInfo,
-        deleteClient,
         currentClientId,
-        editClient,
         currentUserData
       }
     }
