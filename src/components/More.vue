@@ -1,10 +1,8 @@
 <template>
   <div class="column no-wrap justify-center q-mt-md">
-    <div class="column items-center">
-      Изменить цветовую схему
-    </div>
+    <div class="column items-center">Изменить цветовую схему</div>
     <div class="q-pa-md column items-center">
-      <q-color v-model="hex" class="no-header no-footer my-picker" />
+      <q-color v-model="mainColorApp" class="no-header no-footer my-picker" />
     </div>
     <div class="q-pa-md column items-center">
       <div>Clients Planner</div>
@@ -19,27 +17,31 @@
 <script>
 import { defineComponent, ref, watch } from 'vue';
 import { setCssVar } from 'quasar';
-export default defineComponent ({
+
+export default defineComponent({
   name: 'More',
-  setup () {
-    let hex = ref('#7A1FA2');
-    
-    watch(() => hex.value, () => {
-      setCssVar('primary', hex.value);
-    })
+  setup() {
+    const mainColorApp = ref('#7A1FA2');
+
+    watch(
+      () => mainColorApp.value,
+      () => {
+        setCssVar('primary', mainColorApp.value);
+      }
+    );
 
     return {
-      hex
-    }
-  }
-})
+      mainColorApp,
+    };
+  },
+});
 </script>
 
 <style lang="scss" scoped>
-  .my-picker{
-    height: 100%;
-    width: 100%;
-    max-width: 400px;
-    min-width: 250px;
-  }
+.my-picker {
+  height: 100%;
+  width: 100%;
+  max-width: 400px;
+  min-width: 250px;
+}
 </style>

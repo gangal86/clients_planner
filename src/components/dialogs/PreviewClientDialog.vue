@@ -1,66 +1,66 @@
 <template>
-  <q-dialog v-model="isDialogPreviewClientInfo">
+  <q-dialog v-model="isEditClientDialog">
     <q-card>
-        <q-card-section>
-          <div class="q-pa-md">
-              Test Card <br />
-              {{ currentUser.name }}<br />
-              {{ currentUser.service }}<br />
-              {{ currentUser.phone }}<br />
-              {{ currentUser.date }}<br />     
-          </div>
-        </q-card-section>
-        <div>
-          <q-btn label="Изменить" color="primary" @click="editClient" />
-          <q-btn label="Удалить" color="primary" @click="deleteClient" />
-          <q-btn label="Отмена" color="primary" flat class="q-ml-sm" @click="isDialogPreviewClientInfo = false" />
+      <q-card-section>
+        <div class="q-pa-md">
+          Test Card <br />
+          {{ currentUserDataProp.name }}<br />
+          {{ currentUserDataProp.service }}<br />
+          {{ currentUserDataProp.phone }}<br />
+          {{ currentUserDataProp.date }}<br />
         </div>
+      </q-card-section>
+      <div>
+        <q-btn label="Изменить" color="primary" @click="showEditClientDialog" />
+        <q-btn label="Удалить" color="primary" @click="deleteClient" />
+        <q-btn
+          label="Отмена"
+          color="primary"
+          flat
+          class="q-ml-sm"
+          @click="isEditClientDialog = false"
+        />
+      </div>
     </q-card>
   </q-dialog>
 </template>
 
 <script>
-  import { defineComponent, computed } from  'vue';
-  import { useStore } from 'vuex';
+import { defineComponent, computed } from 'vue';
+import { useStore } from 'vuex';
 
-  export default defineComponent({
-    name: 'PreviewClientDialog',
-    props: [
-      'modelValue',
-      'currentUserData'
-    ],
-    emits: [
-      'update:modelValue',
-      'update:isDialogEdit'
-    ],
-    setup(props, context) {
-      const store = useStore();
-      const isDialogPreviewClientInfo = computed({
-        get(){
-          return props.modelValue;
-        },
-        set(val) {
-          context.emit('update:modelValue', val);
-        }
-      });
+export default defineComponent({
+  name: 'PreviewClientDialog',
+  props: ['modelValue', 'currentUserData'],
+  emits: ['update:modelValue', 'update:isEditClientDialog'],
+  setup(props, context) {
+    const store = useStore();
+    const isEditClientDialog = computed({
+      get() {
+        return props.modelValue;
+      },
+      set(val) {
+        context.emit('update:modelValue', val);
+      },
+    });
 
-      const currentUser = computed(() => props.currentUserData);
+    const currentUserDataProp = computed(() => props.currentUserData);
 
-      const editClient = () => {
-        context.emit('update:isDialogEdit', true)
-      }
+    const showEditClientDialog = () => {
+      context.emit('update:isEditClientDialog', true);
+    };
 
-      const deleteClient = () => {
-        store.dispatch('storeClients/deleteClient', currentUser.value.id)
-        context.emit('update:modelValue', false);
-      }
+    const deleteClient = () => {
+      store.dispatch('storeClients/deleteClient', currentUserDataProp.value.id);
+      context.emit('update:modelValue', false);
+    };
 
-      return {
-        isDialogPreviewClientInfo,
-        currentUser,
-        editClient,
-        deleteClient
-      }
-    }
-  })
+    return {
+      isEditClientDialog,
+      currentUserDataProp,
+      showEditClientDialog,
+      deleteClient,
+    };
+  },
+});
 </script>

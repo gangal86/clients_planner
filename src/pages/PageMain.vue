@@ -1,12 +1,8 @@
 <template>
   <q-page class="row items-start justify-center">
-
     <Header :mainMenuTabs="mainMenuTabs" />
 
-    <q-tab-panels
-      v-model="mainMenuTabs"
-      animated
-    >
+    <q-tab-panels v-model="mainMenuTabs" animated>
       <q-tab-panel class="q-pa-xs" name="clients">
         <ClientsList />
       </q-tab-panel>
@@ -21,19 +17,15 @@
 
       <q-tab-panel class="q-pa-xs" name="more">
         <More />
-      </q-tab-panel>     
+      </q-tab-panel>
     </q-tab-panels>
 
-    <Footer 
-      :mainMenuTabs="mainMenuTabs" 
-      @change-menu-tabs="mainMenuTabs = $event" 
-    />
-
+    <Footer v-model="mainMenuTabs" />
   </q-page>
 </template>
 
 <script>
-import { defineComponent, ref} from 'vue';
+import { defineComponent, ref } from 'vue';
 import ClientsList from 'components/ClientsList.vue';
 import ServicesList from 'src/components/ServicesList.vue';
 import Calendar from 'components/Calendar.vue';
@@ -49,20 +41,20 @@ export default defineComponent({
     Calendar,
     Header,
     More,
-    Footer
+    Footer,
   },
-  setup () {
+  setup() {
     return {
-      mainMenuTabs: ref('clients')
-    }
-  }
+      mainMenuTabs: ref('clients'),
+    };
+  },
 });
 </script>
 
 <style lang="scss" scoped>
-  .q-tab-panels{
-    width: 100%;
-    max-width: 400px;
-    min-width: 300px;
-  }
+.q-tab-panels {
+  width: 100%;
+  max-width: 400px;
+  min-width: 300px;
+}
 </style>
