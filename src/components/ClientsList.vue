@@ -1,16 +1,21 @@
 <template>
-  <div class="row justify-center q-mt-md">
-    <q-btn
-      no-caps
-      outline
-      rounded
-      color="primary"
-      icon="add"
-      label="Добавить клиента"
-      @click="showAddClientDialog"
-    />
-  </div>
   <q-list separator class="q-my-md">
+    <q-input
+      outlined
+      bottom-slots
+      v-model="searchText"
+      label="Введите имя клиента"
+    >
+      <template v-slot:append>
+        <q-icon
+          v-if="searchText !== ''"
+          name="close"
+          @click="searchText = ''"
+          class="cursor-pointer"
+        />
+        <q-icon name="search" />
+      </template>
+    </q-input>
     <q-item
       v-for="client in allClients"
       :key="client.id"
@@ -39,18 +44,12 @@
         }}</q-item-label>
       </q-item-section>
     </q-item>
-
-    <PreviewClientDialog
-      v-model="isPreviewClientDialog"
-      :currentUserData="currentUserData"
-      @update:isEditClientDialog="isEditClientDialog = $event"
-    />
   </q-list>
 
-  <AddClientDialog
-    v-model="isAddClientDialog"
-    :clientDate="clientDate"
-    @update:clientDate="clientDate = $event"
+  <PreviewClientDialog
+    v-model="isPreviewClientDialog"
+    :currentUserData="currentUserData"
+    @update:isEditClientDialog="isEditClientDialog = $event"
   />
 
   <EditClientDialog
@@ -59,24 +58,18 @@
     @update:currentUserData="currentUserData = $event"
     @update:isPreviewClientDialog="isPreviewClientDialog = $event"
   />
-
-  <q-banner v-if="isWarningBanner" inline-actions class="text-white bg-red">
-    Сперва добавьте хотя бы одну услугу.
-  </q-banner>
 </template>
 
 <script>
 import { defineComponent, computed, ref } from 'vue';
 import { useStore } from 'vuex';
 import { date } from 'quasar';
-import AddClientDialog from 'src/components/dialogs/AddClientDialog.vue';
 import EditClientDialog from 'src/components/dialogs/EditClientDialog.vue';
 import PreviewClientDialog from 'src/components/dialogs/PreviewClientDialog.vue';
 
 export default defineComponent({
   name: 'ClientsList',
   components: {
-    AddClientDialog,
     EditClientDialog,
     PreviewClientDialog,
   },
@@ -85,8 +78,8 @@ export default defineComponent({
     const isAddClientDialog = ref(false);
     const isEditClientDialog = ref(false);
     const isPreviewClientDialog = ref(false);
-    const isWarningBanner = ref(false);
     const currentUserData = ref(null);
+    const searchText = ref('');
     const currentDateFormat = 'HH:mm - DD/MM/YYYY';
     const clientDate = ref(date.formatDate(Date.now(), currentDateFormat));
 
@@ -105,6 +98,9 @@ export default defineComponent({
             service: item.service,
           };
         })
+        .filter((item) =>
+          item.name.toLowerCase().includes(searchText.value.toLowerCase())
+        )
         .sort(function (a, b) {
           return new Date(
             date.formatDate(
@@ -123,20 +119,6 @@ export default defineComponent({
         })
     );
 
-    const servicesOptions = computed(() =>
-      store.getters['storeClients/getAllClientsServices'].map(
-        (item) => item.name
-      )
-    );
-
-    const showAddClientDialog = () => {
-      if (servicesOptions.value.length === 0) {
-        isWarningBanner.value = true;
-        return;
-      }
-      isAddClientDialog.value = true;
-    };
-
     const showPreviewClientDialog = (clientId) => {
       isPreviewClientDialog.value = true;
       currentUserData.value = allClients.value.find(
@@ -148,12 +130,11 @@ export default defineComponent({
       allClients,
       isAddClientDialog,
       isEditClientDialog,
-      isWarningBanner,
       isPreviewClientDialog,
-      showAddClientDialog,
       showPreviewClientDialog,
       currentUserData,
       clientDate,
+      searchText,
     };
   },
 });
@@ -162,5 +143,8 @@ export default defineComponent({
 <style lang="scss" scoped>
 .q-item {
   padding: 10px 20px;
+}
+.q-input {
+  padding: 0px 15px;
 }
 </style>

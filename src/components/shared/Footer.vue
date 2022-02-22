@@ -20,9 +20,9 @@
         class="q-pa-sm"
       />
       <q-tab
-        name="calendar"
-        icon="eva-calendar-outline"
-        label="Календарь"
+        name="search"
+        icon="eva-search-outline"
+        label="Поиск"
         class="q-pa-sm"
       />
       <q-tab

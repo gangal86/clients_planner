@@ -4,15 +4,15 @@
 
     <q-tab-panels v-model="mainMenuTabs" animated>
       <q-tab-panel class="q-pa-xs" name="clients">
-        <ClientsList />
+        <Calendar />
       </q-tab-panel>
 
       <q-tab-panel class="q-pa-xs" name="services">
         <ServicesList />
       </q-tab-panel>
 
-      <q-tab-panel class="q-pa-xs" name="calendar">
-        <Calendar />
+      <q-tab-panel class="q-pa-xs" name="search">
+        <ClientsList />
       </q-tab-panel>
 
       <q-tab-panel class="q-pa-xs" name="more">

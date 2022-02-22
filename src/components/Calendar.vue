@@ -18,6 +18,13 @@
   >
     <q-card-section>
       <div class="row justify-center">
+        <q-banner
+          v-if="isWarningBanner"
+          inline-actions
+          class="text-white bg-red"
+        >
+          Сперва добавьте хотя бы одну услугу.
+        </q-banner>
         <q-btn
           no-caps
           outline
@@ -25,10 +32,10 @@
           color="primary"
           icon="add"
           label="Добавить клиента"
-          @click="isAddClientDialog = true"
+          @click="showAddClientDialog"
         />
       </div>
-      <q-list separator class="q-my-md">
+      <q-list separator class="q-my-xs">
         <template v-for="client in allClients" :key="client.id">
           <q-item
             v-if="client.date === dateNow"
@@ -58,15 +65,15 @@
             </q-item-section>
           </q-item>
         </template>
-
-        <PreviewClientDialog
-          v-model="isPreviewClientDialog"
-          :currentUserData="currentUserData"
-          @update:isEditClientDialog="isEditClientDialog = $event"
-        />
       </q-list>
     </q-card-section>
   </q-card>
+
+  <PreviewClientDialog
+    v-model="isPreviewClientDialog"
+    :currentUserData="currentUserData"
+    @update:isEditClientDialog="isEditClientDialog = $event"
+  />
 
   <AddClientDialog
     v-model="isAddClientDialog"
@@ -102,6 +109,7 @@ export default defineComponent({
     const isEditClientDialog = ref(false);
     const isAddClientDialog = ref(false);
     const isPreviewClientDialog = ref(false);
+    const isWarningBanner = ref(false);
     const calendar = ref(null);
     const currentUserData = ref(null);
     const clientName = ref('');
@@ -213,6 +221,14 @@ export default defineComponent({
       }
     };
 
+    const showAddClientDialog = () => {
+      if (servicesOptions.value.length === 0) {
+        isWarningBanner.value = true;
+        return;
+      }
+      isAddClientDialog.value = true;
+    };
+
     return {
       dateNow,
       allClientsDates,
@@ -230,8 +246,10 @@ export default defineComponent({
       showPreviewClientDialog,
       isPreviewClientDialog,
       isEditClientDialog,
+      isWarningBanner,
       calendarCardHasSwiped,
       currentUserData,
+      showAddClientDialog,
     };
   },
 });
