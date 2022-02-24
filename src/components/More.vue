@@ -4,13 +4,6 @@
     <div class="q-pa-md column items-center">
       <q-color v-model="mainColorApp" class="no-header no-footer my-picker" />
     </div>
-    <div class="q-pa-md column items-center">
-      <div>Clients Planner</div>
-      <span class="text-weight-regular">Developer: </span>
-      <a href="https://gangal.pro" target="_blank">
-        <span class="text-weight-bold text-primary">Roman Gangal</span>
-      </a>
-    </div>
   </div>
 </template>
 
