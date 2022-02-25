@@ -64,7 +64,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .q-header {
   width: 100%;
-  max-width: 400px;
+  max-width: 600px;
   min-width: 300px;
   margin: 0 auto;
 }
