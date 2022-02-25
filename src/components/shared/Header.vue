@@ -133,18 +133,24 @@ export default defineComponent({
     }
 
     const importState = () => {
-      console.log('import');
       window.resolveLocalFileSystemURL(backupPath, function (dir) {
-        dir.getFile(backupFile, { create: false }, function (fileEntry) {
-          importBackupFile(fileEntry);
-        }, function (e) {
-            console.log('error', e);
-        });
+        dir.getFile(
+          backupFile,
+          { create: false },
+          function (fileEntry) {
+            importBackupFile(fileEntry);
+          },
+          function () {
+            $q.notify({
+              type: 'negative',
+              message: 'Ошибка загрузки базы из файла',
+            });
+          }
+        );
       });
     };
 
     const exportState = () => {
-      console.log('export');
       window.resolveLocalFileSystemURL(backupPath, function (dir) {
         dir.getFile(backupFile, { create: true }, function (fileEntry) {
           const dataObj = new Blob([state], { type: 'application/json' });
@@ -158,8 +164,12 @@ export default defineComponent({
         const reader = new FileReader();
 
         reader.onloadend = function () {
-          console.log('Successful file read...');
           store.dispatch('storeClients/importState', JSON.parse(this.result));
+          isImportExport.value = false;
+          $q.notify({
+            type: 'positive',
+            message: 'База из файла загружена',
+          });
         };
 
         reader.readAsText(file);
@@ -169,11 +179,18 @@ export default defineComponent({
     function exportBackupFile(fileEntry, dataObj) {
       fileEntry.createWriter(function (fileWriter) {
         fileWriter.onwriteend = function () {
-          console.log('Successful file write...');
+          isImportExport.value = false;
+          $q.notify({
+            type: 'positive',
+            message: 'База в файл сохранена',
+          });
         };
 
         fileWriter.onerror = function (e) {
-          console.log('Failed file write: ' + e.toString());
+          $q.notify({
+            type: 'negative',
+            message: 'Ошибка сохранения базы в файл',
+          });
         };
 
         fileWriter.write(dataObj);
