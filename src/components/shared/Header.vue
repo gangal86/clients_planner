@@ -81,45 +81,21 @@
     </q-card>
   </q-dialog>
 
-  <q-dialog v-model="isAboutProgram">
-    <q-card>
-      <q-card-section class="column q-pb-xs">
-        <q-card>
-          <q-card-section class="bg-primary text-white">
-            <div class="text-h6">Clients Planner</div>
-            <div class="text-subtitle2">
-              Accounting and working with clients, a schedule for masters
-            </div>
-          </q-card-section>
-          <q-card-actions vertical align="left">
-            <div class="text-subtitle2">
-              <span class="text-weight-regular">Developer: </span>
-              <a
-                href="https://gangal.pro"
-                target="_blank"
-                class="about-program-link"
-              >
-                <span class="text-weight-bold text-primary">Roman Gangal</span>
-              </a>
-            </div>
-          </q-card-actions>
-        </q-card>
-      </q-card-section>
-      <q-card-actions align="right">
-        <q-btn flat label="OK" color="primary" v-close-popup />
-      </q-card-actions>
-    </q-card>
-  </q-dialog>
+<AboutProgramDialog v-model="isAboutProgram" />
 </template>
 
 <script>
 import { defineComponent, ref } from 'vue';
 import { useStore } from 'vuex';
 import { useQuasar } from 'quasar';
+import AboutProgramDialog from 'components/dialogs/AboutProgramDialog.vue';
 
 export default defineComponent({
   name: 'Header',
   props: ['mainMenuTabs'],
+  components: {
+    AboutProgramDialog
+  },
   setup() {
     const store = useStore();
     const $q = useQuasar();
@@ -216,13 +192,6 @@ export default defineComponent({
 }
 .menu-options {
   min-width: 140px;
-}
-.about-program-link {
-  text-decoration: none;
-  &:hover {
-    text-decoration: underline;
-    color: $primary;
-  }
 }
 .q-card {
   width: 100%;
