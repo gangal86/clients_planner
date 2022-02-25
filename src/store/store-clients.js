@@ -29,6 +29,11 @@ const mutations = {
     state.services.unshift(payload);
     LocalStorage.set('services', state.services);
   },
+  importState(state, payload) {
+    Object.assign(state, payload);
+    LocalStorage.set('clients', state.clients);
+    LocalStorage.set('services', state.services);
+  }
 };
 
 const actions = {
@@ -44,6 +49,9 @@ const actions = {
   addService({ commit }, payload) {
     commit('addService', payload);
   },
+  importState({ commit }, payload) {
+    commit('importState', payload);
+  },
 };
 
 const getters = {
@@ -56,6 +64,9 @@ const getters = {
   getAllClientsServices(state) {
     return state.services;
   },
+  getState(state) {
+    return state;
+  }
 };
 
 export default {
