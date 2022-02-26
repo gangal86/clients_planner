@@ -18,13 +18,6 @@
   >
     <q-card-section>
       <div class="row justify-center">
-        <q-banner
-          v-if="isWarningBanner"
-          inline-actions
-          class="text-white bg-red"
-        >
-          Сперва добавьте хотя бы одну услугу.
-        </q-banner>
         <q-btn
           no-caps
           outline
@@ -92,7 +85,7 @@
 <script>
 import { defineComponent, ref, computed, watch } from 'vue';
 import { useStore } from 'vuex';
-import { date } from 'quasar';
+import { date, useQuasar } from 'quasar';
 import AddClientDialog from 'src/components/dialogs/AddClientDialog.vue';
 import EditClientDialog from 'src/components/dialogs/EditClientDialog.vue';
 import PreviewClientDialog from 'src/components/dialogs/PreviewClientDialog.vue';
@@ -106,10 +99,10 @@ export default defineComponent({
   },
   setup() {
     const store = useStore();
+    const $q = useQuasar();
     const isEditClientDialog = ref(false);
     const isAddClientDialog = ref(false);
     const isPreviewClientDialog = ref(false);
-    const isWarningBanner = ref(false);
     const calendar = ref(null);
     const currentUserData = ref(null);
     const clientName = ref('');
@@ -223,7 +216,10 @@ export default defineComponent({
 
     const showAddClientDialog = () => {
       if (servicesOptions.value.length === 0) {
-        isWarningBanner.value = true;
+        $q.notify({
+          type: 'negative',
+          message: 'Сперва добавьте хотя бы одну услугу',
+        });
         return;
       }
       isAddClientDialog.value = true;
@@ -246,7 +242,6 @@ export default defineComponent({
       showPreviewClientDialog,
       isPreviewClientDialog,
       isEditClientDialog,
-      isWarningBanner,
       calendarCardHasSwiped,
       currentUserData,
       showAddClientDialog,
