@@ -14,6 +14,9 @@ const state = () => ({
 const mutations = {
   addClient(state, payload) {
     state.clients.unshift(payload);
+    const dateLimit = new Date(Date.now());
+    dateLimit.setDate(dateLimit.getDate() - 30);
+    state.clients = state.clients.filter(item => (new Date(item.date)).getTime() >= dateLimit.getTime())
     LocalStorage.set('clients', state.clients);
   },
   deleteClient(state, id) {
