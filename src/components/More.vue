@@ -8,20 +8,23 @@
 </template>
 
 <script>
-import { defineComponent, ref, watch } from 'vue';
+import { defineComponent, computed } from 'vue';
+import { useStore } from 'vuex';
 import { setCssVar } from 'quasar';
 
 export default defineComponent({
   name: 'More',
   setup() {
-    const mainColorApp = ref('#7A1FA2');
-
-    watch(
-      () => mainColorApp.value,
-      () => {
-        setCssVar('primary', mainColorApp.value);
-      }
-    );
+    const store = useStore();
+    const mainColorApp = computed({
+      get() {
+        return store.getters['storeClients/getMainColorApp'];
+      },
+      set(val) {
+        setCssVar('primary', val);
+        store.dispatch('storeClients/updateMainColorApp', val);
+      },
+    });
 
     return {
       mainColorApp,

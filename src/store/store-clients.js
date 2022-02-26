@@ -9,14 +9,20 @@ const state = () => ({
     LocalStorage.getItem('services') !== null
       ? LocalStorage.getItem('services')
       : [],
+  mainColorApp:
+    LocalStorage.getItem('mainColorApp') !== null
+      ? LocalStorage.getItem('mainColorApp')
+      : '#7A1FA2',
 });
 
 const mutations = {
   addClient(state, payload) {
     state.clients.unshift(payload);
     const dateLimit = new Date(Date.now());
-    dateLimit.setDate(dateLimit.getDate() - 30);
-    state.clients = state.clients.filter(item => (new Date(item.date)).getTime() >= dateLimit.getTime())
+    dateLimit.setDate(dateLimit.getDate() - 90);
+    state.clients = state.clients.filter(
+      (item) => new Date(item.date).getTime() >= dateLimit.getTime()
+    );
     LocalStorage.set('clients', state.clients);
   },
   deleteClient(state, id) {
@@ -36,7 +42,11 @@ const mutations = {
     Object.assign(state, payload);
     LocalStorage.set('clients', state.clients);
     LocalStorage.set('services', state.services);
-  }
+  },
+  updateMainColorApp(state, payload) {
+    state.mainColorApp = payload;
+    LocalStorage.set('mainColorApp', state.mainColorApp);
+  },
 };
 
 const actions = {
@@ -55,6 +65,9 @@ const actions = {
   importState({ commit }, payload) {
     commit('importState', payload);
   },
+  updateMainColorApp({ commit }, payload) {
+    commit('updateMainColorApp', payload);
+  },
 };
 
 const getters = {
@@ -69,7 +82,10 @@ const getters = {
   },
   getState(state) {
     return state;
-  }
+  },
+  getMainColorApp(state) {
+    return state.mainColorApp;
+  },
 };
 
 export default {
