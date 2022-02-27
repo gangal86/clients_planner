@@ -1,26 +1,62 @@
 <template>
   <q-dialog v-model="isEditClientDialog">
     <q-card>
-      <q-card-section>
-        <div class="q-pa-md">
-          Test Card <br />
-          {{ currentUserDataProp.name }}<br />
-          {{ currentUserDataProp.service }}<br />
-          {{ currentUserDataProp.phone }}<br />
-          {{ currentUserDataProp.date }}<br />
+      <q-card-section class="row items-center q-pt-sm q-pb-none">
+        <q-space />
+        <q-btn icon="close" flat round dense v-close-popup />
+      </q-card-section>
+      <q-card-section class="q-pt-none q-pb-sm">
+        <div class="q-pa-xs">
+          <q-table
+            :rows="[
+              {
+                name: 'Имя',
+                value: currentUserDataProp.name,
+              },
+              {
+                name: 'Услуга',
+                value: currentUserDataProp.service,
+              },
+              {
+                name: 'Телефон',
+                value: currentUserDataProp.phone,
+              },
+              {
+                name: 'Дата',
+                value: currentUserDataProp.dateCurrentFormat
+                  ? currentUserDataProp.dateCurrentFormat
+                  : currentUserDataProp.date,
+              },
+            ]"
+            :columns="[
+              {
+                name: 'name',
+                align: 'left',
+                field: 'name',
+              },
+              {
+                name: 'value',
+                align: 'center',
+                field: 'value',
+              },
+            ]"
+            class="preview-table"
+            row-key="name"
+            hide-header
+            hide-bottom
+          />
         </div>
       </q-card-section>
-      <div>
-        <q-btn label="Изменить" color="primary" @click="showEditClientDialog" />
-        <q-btn label="Удалить" color="primary" @click="deleteClient" />
+      <q-card-section class="row justify-center q-pt-none q-pb-sm">
         <q-btn
-          label="Отмена"
+          label="Изменить"
+          class="q-mr-sm"
           color="primary"
-          flat
-          class="q-ml-sm"
-          @click="isEditClientDialog = false"
+          @click="showEditClientDialog"
+          no-caps
         />
-      </div>
+        <q-btn label="Удалить" color="negative" @click="deleteClient" no-caps />
+      </q-card-section>
     </q-card>
   </q-dialog>
 </template>
@@ -64,3 +100,11 @@ export default defineComponent({
   },
 });
 </script>
+
+<style lang="scss">
+.preview-table {
+  td:first-child {
+    background-color: #f5f5dc;
+  }
+}
+</style>
