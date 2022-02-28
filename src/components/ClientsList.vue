@@ -64,6 +64,7 @@
 import { defineComponent, computed, ref } from 'vue';
 import { useStore } from 'vuex';
 import { date } from 'quasar';
+import { useExport } from '../helpers/useExport';
 import EditClientDialog from 'src/components/dialogs/EditClientDialog.vue';
 import PreviewClientDialog from 'src/components/dialogs/PreviewClientDialog.vue';
 
@@ -80,7 +81,7 @@ export default defineComponent({
     const isPreviewClientDialog = ref(false);
     const currentUserData = ref(null);
     const searchText = ref('');
-    const currentDateFormat = 'HH:mm - DD/MM/YYYY';
+    const { currentDateFormat } = useExport();
     const clientDate = ref(date.formatDate(Date.now(), currentDateFormat));
 
     const allClients = computed(() =>

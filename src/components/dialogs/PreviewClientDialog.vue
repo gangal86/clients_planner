@@ -1,5 +1,5 @@
 <template>
-  <q-dialog v-model="isEditClientDialog">
+  <q-dialog v-model="isPreviewClientDialog">
     <q-card>
       <q-card-section class="row items-center q-pt-sm q-pb-none">
         <q-space />
@@ -8,38 +8,8 @@
       <q-card-section class="q-pt-none q-pb-sm">
         <div class="q-pa-xs">
           <q-table
-            :rows="[
-              {
-                name: 'Имя',
-                value: currentUserDataProp.name,
-              },
-              {
-                name: 'Услуга',
-                value: currentUserDataProp.service,
-              },
-              {
-                name: 'Телефон',
-                value: currentUserDataProp.phone,
-              },
-              {
-                name: 'Дата',
-                value: currentUserDataProp.dateCurrentFormat
-                  ? currentUserDataProp.dateCurrentFormat
-                  : currentUserDataProp.date,
-              },
-            ]"
-            :columns="[
-              {
-                name: 'name',
-                align: 'left',
-                field: 'name',
-              },
-              {
-                name: 'value',
-                align: 'center',
-                field: 'value',
-              },
-            ]"
+            :rows="previewRows"
+            :columns="previewColumns"
             class="preview-table"
             row-key="name"
             hide-header
@@ -71,7 +41,41 @@ export default defineComponent({
   emits: ['update:modelValue', 'update:isEditClientDialog'],
   setup(props, context) {
     const store = useStore();
-    const isEditClientDialog = computed({
+    const previewColumns = [
+      {
+        name: 'name',
+        align: 'left',
+        field: 'name',
+      },
+      {
+        name: 'value',
+        align: 'center',
+        field: 'value',
+      },
+    ];
+    
+    const previewRows = computed(() => [
+      {
+        name: 'Имя',
+        value: currentUserDataProp.value.name,
+      },
+      {
+        name: 'Услуга',
+        value: currentUserDataProp.value.service,
+      },
+      {
+        name: 'Телефон',
+        value: currentUserDataProp.value.phone,
+      },
+      {
+        name: 'Дата',
+        value: currentUserDataProp.value.dateCurrentFormat
+          ? currentUserDataProp.value.dateCurrentFormat
+          : currentUserDataProp.value.date,
+      },
+    ]);
+
+    const isPreviewClientDialog = computed({
       get() {
         return props.modelValue;
       },
@@ -92,8 +96,10 @@ export default defineComponent({
     };
 
     return {
-      isEditClientDialog,
+      isPreviewClientDialog,
       currentUserDataProp,
+      previewColumns,
+      previewRows,
       showEditClientDialog,
       deleteClient,
     };
@@ -104,7 +110,7 @@ export default defineComponent({
 <style lang="scss">
 .preview-table {
   td:first-child {
-    background-color: #f5f5dc;
+    background-color: #f5f5dc !important;
   }
 }
 </style>

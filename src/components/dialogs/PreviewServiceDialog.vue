@@ -8,28 +8,8 @@
       <q-card-section class="q-pt-none q-pb-sm">
         <div class="q-pa-xs">
           <q-table
-            :rows="[
-              {
-                name: 'Услуга',
-                value: currentServiceDataProp.name,
-              },
-              {
-                name: 'Цена',
-                value: currentServiceDataProp.price,
-              },
-            ]"
-            :columns="[
-              {
-                name: 'name',
-                align: 'left',
-                field: 'name',
-              },
-              {
-                name: 'value',
-                align: 'center',
-                field: 'value',
-              },
-            ]"
+            :rows="previewRows"
+            :columns="previewColumns"
             class="preview-table"
             row-key="name"
             hide-header
@@ -66,6 +46,29 @@ export default defineComponent({
   emits: ['update:modelValue', 'update:isEditServiceDialog'],
   setup(props, context) {
     const store = useStore();
+    const previewColumns = [
+      {
+        name: 'name',
+        align: 'left',
+        field: 'name',
+      },
+      {
+        name: 'value',
+        align: 'center',
+        field: 'value',
+      },
+    ];
+
+    const previewRows = computed(() => [
+      {
+        name: 'Услуга',
+        value: currentServiceDataProp.value.name,
+      },
+      {
+        name: 'Цена',
+        value: currentServiceDataProp.value.price,
+      },
+    ]);
 
     const isPreviewServiceDialog = computed({
       get() {
@@ -93,6 +96,8 @@ export default defineComponent({
     return {
       isPreviewServiceDialog,
       currentServiceDataProp,
+      previewColumns,
+      previewRows,
       showEditServiceDialog,
       deleteService,
     };

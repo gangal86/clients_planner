@@ -86,6 +86,7 @@
 import { defineComponent, ref, computed, watch } from 'vue';
 import { useStore } from 'vuex';
 import { date, useQuasar } from 'quasar';
+import { useExport } from '../helpers/useExport';
 import AddClientDialog from 'src/components/dialogs/AddClientDialog.vue';
 import EditClientDialog from 'src/components/dialogs/EditClientDialog.vue';
 import PreviewClientDialog from 'src/components/dialogs/PreviewClientDialog.vue';
@@ -109,24 +110,14 @@ export default defineComponent({
     const clientService = ref('');
     const clientPhone = ref('');
     const dateNow = ref(date.formatDate(Date.now(), 'DD/MM/YYYY'));
-    const currentDateFormat = 'HH:mm - DD/MM/YYYY';
+    const { currentDateFormat } = useExport();
     const clientDate = ref(
       date.formatDate(
         date.extractDate(dateNow.value, 'DD/MM/YYYY'),
         currentDateFormat
       )
     );
-    const currentLocale = {
-      days: 'Воскресенье_Понедельник_Вторник_Среда_Четверг_Пятница_Суббота_Воскресенье'.split(
-        '_'
-      ),
-      daysShort: 'Вс_Пн_Вт_Ср_Чт_Пт_Сб'.split('_'),
-      months:
-        'Январь_Февраль_Март_Апрель_Май_Июнь_Июль_Август_Сентябрь_Октябрь_Ноябрь_Декабрь'.split(
-          '_'
-        ),
-      monthsShort: 'Янв_Фев_Мар_Апр_Май_Июн_Июл_Авг_Сен_Окт_Ноя_Дек'.split('_'),
-    };
+    const { currentLocale } = useExport();
 
     const allClientsDates = computed(
       () => store.getters['storeClients/getAllClientsDates']

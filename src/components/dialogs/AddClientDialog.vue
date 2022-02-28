@@ -80,6 +80,7 @@
 import { defineComponent, computed, ref } from 'vue';
 import { useStore } from 'vuex';
 import { date, uid } from 'quasar';
+import { useExport } from '../../helpers/useExport';
 
 export default defineComponent({
   name: 'AddClientDialog',
@@ -90,7 +91,7 @@ export default defineComponent({
     const clientName = ref('');
     const clientService = ref('');
     const clientPhone = ref('');
-    const currentDateFormat = 'HH:mm - DD/MM/YYYY';
+    const { currentDateFormat } = useExport();
     const clientDateProp = computed({
       get() {
         return props.clientDate;
