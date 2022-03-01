@@ -1,18 +1,19 @@
 import { LocalStorage } from 'quasar';
 
 const state = () => ({
-  clients:
-    LocalStorage.getItem('clients') !== null
-      ? LocalStorage.getItem('clients')
-      : [],
-  services:
-    LocalStorage.getItem('services') !== null
-      ? LocalStorage.getItem('services')
-      : [],
-  mainColorApp:
-    LocalStorage.getItem('mainColorApp') !== null
-      ? LocalStorage.getItem('mainColorApp')
-      : '#7A1FA2',
+  clients: LocalStorage.has('clients') ? LocalStorage.getItem('clients') : [],
+  services: LocalStorage.has('services')
+    ? LocalStorage.getItem('services')
+    : [],
+  mainColorApp: LocalStorage.has('mainColorApp')
+    ? LocalStorage.getItem('mainColorApp')
+    : '#7A1FA2',
+  countryFlagStatus: LocalStorage.has('countryFlagStatus')
+    ? LocalStorage.getItem('countryFlagStatus')
+    : false,
+  currentLocale: LocalStorage.has('currentLocale')
+    ? LocalStorage.getItem('currentLocale')
+    : 'ru',
 });
 
 const mutations = {
@@ -56,6 +57,14 @@ const mutations = {
     state.mainColorApp = payload;
     LocalStorage.set('mainColorApp', state.mainColorApp);
   },
+  setCountryFlagStatus(state, payload) {
+    state.countryFlagStatus = payload;
+    LocalStorage.set('countryFlagStatus', state.countryFlagStatus);
+  },
+  setCurrentLocale(state, payload) {
+    state.currentLocale = payload;
+    LocalStorage.set('currentLocale', state.currentLocale);
+  },
 };
 
 const actions = {
@@ -83,6 +92,12 @@ const actions = {
   updateMainColorApp({ commit }, payload) {
     commit('updateMainColorApp', payload);
   },
+  setCountryFlagStatus({ commit }, payload) {
+    commit('setCountryFlagStatus', payload);
+  },
+  setCurrentLocale({ commit }, payload) {
+    commit('setCurrentLocale', payload);
+  },
 };
 
 const getters = {
@@ -100,6 +115,9 @@ const getters = {
   },
   getMainColorApp(state) {
     return state.mainColorApp;
+  },
+  getCountryFlagStatus(state) {
+    return state.countryFlagStatus;
   },
 };
 

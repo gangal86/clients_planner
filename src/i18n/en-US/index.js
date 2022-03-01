@@ -1,7 +1,6 @@
-// This is just an example,
-// so you can safely delete all default props below
+// EN
 
 export default {
-  failed: 'Action failed',
-  success: 'Action was successful'
-}
+  headerTitleClients: 'Clients',
+  headerTitleServices: 'Services',
+};
