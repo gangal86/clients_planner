@@ -16,4 +16,6 @@ export default {
   searchTitleEnterClientName: 'Enter client name',
   titleChangeColorScheme: 'Change color scheme',
   btnTitleAddService: 'Add service',
+  aboutProgramDescription: 'Accounting and working with clients, a schedule for masters',
+  aboutProgramDeveloper: 'Developer: ',
 };

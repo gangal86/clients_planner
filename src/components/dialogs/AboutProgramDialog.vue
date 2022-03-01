@@ -6,12 +6,12 @@
           <q-card-section class="bg-primary text-white">
             <div class="text-h6">Clients Planner</div>
             <div class="text-subtitle2">
-              Accounting and working with clients, a schedule for masters
+              {{ $t('aboutProgramDescription') }}
             </div>
           </q-card-section>
           <q-card-actions vertical align="left">
             <div class="text-subtitle2">
-              <span class="text-weight-regular">Developer: </span>
+              <span class="text-weight-regular">{{ $t('aboutProgramDeveloper') }}</span>
               <a
                 href="https://gangal.pro"
                 target="_blank"

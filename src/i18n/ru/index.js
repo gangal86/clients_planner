@@ -16,4 +16,6 @@ export default {
   searchTitleEnterClientName: 'Введите имя клиента',
   titleChangeColorScheme: 'Изменить цветовую схему',
   btnTitleAddService: 'Добавить услугу',
+  aboutProgramDescription: 'Учет и работа с клиентами, расписание для мастеров',
+  aboutProgramDeveloper: 'Разработчик: ',
 };
