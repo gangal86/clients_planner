@@ -11,4 +11,6 @@ export default {
   footerTitleServices: 'Услуги',
   footerTitleSearch: 'Поиск',
   footerTitleMore: 'Больше',
+  btnTitleAddClient: 'Добавить клиента',
+  notifyMsgAddService: 'Сперва добавьте хотя бы одну услугу',
 };

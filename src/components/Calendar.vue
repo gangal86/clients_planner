@@ -24,7 +24,7 @@
           rounded
           color="primary"
           icon="add"
-          label="Добавить клиента"
+          :label="$t('btnTitleAddClient')"
           @click="showAddClientDialog"
         />
       </div>
@@ -87,6 +87,7 @@ import { defineComponent, ref, computed, watch } from 'vue';
 import { useStore } from 'vuex';
 import { date, useQuasar } from 'quasar';
 import { useExport } from '../helpers/useExport';
+import { useI18n } from 'vue-i18n';
 import AddClientDialog from 'src/components/dialogs/AddClientDialog.vue';
 import EditClientDialog from 'src/components/dialogs/EditClientDialog.vue';
 import PreviewClientDialog from 'src/components/dialogs/PreviewClientDialog.vue';
@@ -101,6 +102,7 @@ export default defineComponent({
   setup() {
     const store = useStore();
     const $q = useQuasar();
+    let { t } = useI18n({ useScope: 'global' });
     const isEditClientDialog = ref(false);
     const isAddClientDialog = ref(false);
     const isPreviewClientDialog = ref(false);
@@ -209,7 +211,7 @@ export default defineComponent({
       if (servicesOptions.value.length === 0) {
         $q.notify({
           type: 'negative',
-          message: 'Сперва добавьте хотя бы одну услугу',
+          message: t('notifyMsgAddService'),
         });
         return;
       }

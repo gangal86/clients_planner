@@ -11,4 +11,6 @@ export default {
   footerTitleServices: 'Services',
   footerTitleSearch: 'Search',
   footerTitleMore: 'More',
+  btnTitleAddClient: 'Add client',
+  notifyMsgAddService: 'Add at least one service first',
 };
