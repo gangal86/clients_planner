@@ -14,4 +14,5 @@ export default {
   btnTitleAddClient: 'Добавить клиента',
   notifyMsgAddService: 'Сперва добавьте хотя бы одну услугу',
   searchTitleEnterClientName: 'Введите имя клиента',
+  titleChangeColorScheme: 'Изменить цветовую схему',
 };

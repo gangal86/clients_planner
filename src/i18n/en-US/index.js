@@ -14,4 +14,5 @@ export default {
   btnTitleAddClient: 'Add client',
   notifyMsgAddService: 'Add at least one service first',
   searchTitleEnterClientName: 'Enter client name',
+  titleChangeColorScheme: 'Change color scheme',
 };

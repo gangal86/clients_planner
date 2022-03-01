@@ -1,6 +1,6 @@
 <template>
   <div class="column no-wrap justify-center q-mt-md">
-    <div class="column items-center">Изменить цветовую схему</div>
+    <div class="column items-center">{{ $t('titleChangeColorScheme') }}</div>
     <div class="q-pa-md column items-center">
       <q-color v-model="mainColorApp" class="no-header no-footer my-picker" />
     </div>
