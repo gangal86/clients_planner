@@ -10,25 +10,25 @@
       <q-tab
         name="clients"
         icon="eva-people-outline"
-        label="Клиенты"
+        :label="$t('footerTitleClients')"
         class="q-pa-xs"
       />
       <q-tab
         name="services"
         icon="eva-layers-outline"
-        label="Услуги"
+        :label="$t('footerTitleServices')"
         class="q-pa-sm"
       />
       <q-tab
         name="search"
         icon="eva-search-outline"
-        label="Поиск"
+        :label="$t('footerTitleSearch')"
         class="q-pa-sm"
       />
       <q-tab
         name="more"
         icon="eva-menu-2-outline"
-        label="Больше"
+        :label="$t('footerTitleMore')"
         class="q-pa-xs"
       />
     </q-tabs>

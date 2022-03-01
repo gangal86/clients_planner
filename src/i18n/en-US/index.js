@@ -7,4 +7,8 @@ export default {
   headerTitleMore: 'More',
   moreVertTitleBackup: 'Create BackUp',
   moreVertTitleAbout: 'About program',
+  footerTitleClients: 'Clients',
+  footerTitleServices: 'Services',
+  footerTitleSearch: 'Search',
+  footerTitleMore: 'More',
 };

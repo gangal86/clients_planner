@@ -1,7 +1,7 @@
 <template>
   <q-header bordered class="bg-white text-grey-9">
     <q-toolbar>
-      <q-toolbar-title class="row justify-center text-dark q-ml-xl">
+      <q-toolbar-title class="row justify-center text-dark toolbar-title">
         <div v-if="mainMenuTabs == 'clients'">{{ $t('headerTitleClients') }}</div>
         <div v-if="mainMenuTabs == 'services'">{{ $t('headerTitleServices') }}</div>
         <div v-if="mainMenuTabs == 'search'">{{ $t('headerTitleSearch') }}</div>
@@ -123,6 +123,9 @@ export default defineComponent({
   max-width: 600px;
   min-width: 300px;
   margin: 0 auto;
+}
+.toolbar-title {
+  margin-left: 90px;
 }
 .menu-options {
   min-width: 140px;

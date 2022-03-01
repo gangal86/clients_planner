@@ -7,4 +7,8 @@ export default {
   headerTitleMore: 'Больше',
   moreVertTitleBackup: 'Перенести базу',
   moreVertTitleAbout: 'О программе',
+  footerTitleClients: 'Клиенты',
+  footerTitleServices: 'Услуги',
+  footerTitleSearch: 'Поиск',
+  footerTitleMore: 'Больше',
 };
