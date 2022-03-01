@@ -4,8 +4,8 @@
       <q-toolbar-title class="row justify-center text-dark q-ml-xl">
         <div v-if="mainMenuTabs == 'clients'">{{ $t('headerTitleClients') }}</div>
         <div v-if="mainMenuTabs == 'services'">{{ $t('headerTitleServices') }}</div>
-        <div v-if="mainMenuTabs == 'search'">Поиск</div>
-        <div v-if="mainMenuTabs == 'more'">Больше</div>
+        <div v-if="mainMenuTabs == 'search'">{{ $t('headerTitleSearch') }}</div>
+        <div v-if="mainMenuTabs == 'more'">{{ $t('headerTitleMore') }}</div>
       </q-toolbar-title>
       <q-btn
         @click="selectLang('us')"
@@ -37,14 +37,14 @@
               <q-item-section
                 class="text-caption text-weight-bold text-primary"
               >
-                Перенести базу
+                {{ $t('moreVertTitleBackup') }}
               </q-item-section>
             </q-item>
             <q-item @click="isAboutProgram = !isAboutProgram" dense clickable>
               <q-item-section
                 class="text-caption text-weight-bold text-primary"
               >
-                О программе...
+                {{ $t('moreVertTitleAbout') }}
               </q-item-section>
             </q-item>
           </q-list>
