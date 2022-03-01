@@ -13,4 +13,5 @@ export default {
   footerTitleMore: 'More',
   btnTitleAddClient: 'Add client',
   notifyMsgAddService: 'Add at least one service first',
+  searchTitleEnterClientName: 'Enter client name',
 };

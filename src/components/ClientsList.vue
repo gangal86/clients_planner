@@ -4,7 +4,7 @@
       outlined
       bottom-slots
       v-model="searchText"
-      label="Введите имя клиента"
+      :label="$t('searchTitleEnterClientName')"
     >
       <template v-slot:append>
         <q-icon

@@ -13,4 +13,5 @@ export default {
   footerTitleMore: 'Больше',
   btnTitleAddClient: 'Добавить клиента',
   notifyMsgAddService: 'Сперва добавьте хотя бы одну услугу',
+  searchTitleEnterClientName: 'Введите имя клиента',
 };
