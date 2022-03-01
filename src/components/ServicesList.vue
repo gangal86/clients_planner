@@ -6,7 +6,7 @@
       rounded
       color="primary"
       icon="add"
-      label="Добавить услугу"
+      :label="$t('btnTitleAddService')"
       @click="isAddServiceDialog = true"
     />
   </div>
