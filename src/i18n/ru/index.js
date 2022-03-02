@@ -42,4 +42,10 @@ export default {
   editClientFormServiceHint: 'Пожалуйста, введите услугу',
   editServiceFormPriceHint: 'Пожалуйста, введите цену услуги',
   editServiceFormBtnCancel: 'Отмена',
+  previewClientBtnEdit: 'Изменить',
+  previewClientBtnDelete: 'Удалить',
+  previewClientNameTitle: 'Имя',
+  previewClientServiceTitle: 'Услуга',
+  previewClientPhoneTitle: 'Телефон',
+  previewClientDateTitle: 'Дата',
 };

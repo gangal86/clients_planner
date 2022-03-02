@@ -19,13 +19,13 @@
       </q-card-section>
       <q-card-section class="row justify-center q-pt-none q-pb-sm">
         <q-btn
-          label="Изменить"
+          :label="$t('previewClientBtnEdit')"
           class="q-mr-sm"
           color="primary"
           @click="showEditClientDialog"
           no-caps
         />
-        <q-btn label="Удалить" color="negative" @click="deleteClient" no-caps />
+        <q-btn :label="$t('previewClientBtnDelete')" color="negative" @click="deleteClient" no-caps />
       </q-card-section>
     </q-card>
   </q-dialog>
@@ -34,6 +34,7 @@
 <script>
 import { defineComponent, computed } from 'vue';
 import { useStore } from 'vuex';
+import { useI18n } from 'vue-i18n';
 
 export default defineComponent({
   name: 'PreviewClientDialog',
@@ -41,6 +42,7 @@ export default defineComponent({
   emits: ['update:modelValue', 'update:isEditClientDialog'],
   setup(props, context) {
     const store = useStore();
+    let { t } = useI18n({ useScope: 'global' });
     const previewColumns = [
       {
         name: 'name',
@@ -53,22 +55,22 @@ export default defineComponent({
         field: 'value',
       },
     ];
-    
+
     const previewRows = computed(() => [
       {
-        name: 'Имя',
+        name: t('previewClientNameTitle'),
         value: currentUserDataProp.value.name,
       },
       {
-        name: 'Услуга',
+        name: t('previewClientServiceTitle'),
         value: currentUserDataProp.value.service,
       },
       {
-        name: 'Телефон',
+        name: t('previewClientPhoneTitle'),
         value: currentUserDataProp.value.phone,
       },
       {
-        name: 'Дата',
+        name: t('previewClientDateTitle'),
         value: currentUserDataProp.value.dateCurrentFormat
           ? currentUserDataProp.value.dateCurrentFormat
           : currentUserDataProp.value.date,

@@ -42,4 +42,10 @@ export default {
   editClientFormServiceHint: 'Please enter a service',
   editServiceFormPriceHint: 'Please enter the price of the service',
   editServiceFormBtnCancel: 'Cancel',
+  previewClientBtnEdit: 'Edit',
+  previewClientBtnDelete: 'Delete',
+  previewClientNameTitle: 'Name',
+  previewClientServiceTitle: 'Service',
+  previewClientPhoneTitle: 'Phone',
+  previewClientDateTitle: 'Date',
 };
