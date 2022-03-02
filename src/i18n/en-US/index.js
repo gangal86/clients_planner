@@ -37,4 +37,9 @@ export default {
   editClientFormServiceHint: 'Please enter a service',
   editClientFormPhoneHint: 'Please enter a phone number',
   editClientFormBtnCancel: 'Cancel',
+  editServiceFormServiceTitle: 'Service *',
+  editServiceFormPriceTitle: 'Price *',
+  editClientFormServiceHint: 'Please enter a service',
+  editServiceFormPriceHint: 'Please enter the price of the service',
+  editServiceFormBtnCancel: 'Cancel',
 };
