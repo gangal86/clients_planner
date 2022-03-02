@@ -18,4 +18,11 @@ export default {
   btnTitleAddService: 'Добавить услугу',
   aboutProgramDescription: 'Учет и работа с клиентами, расписание для мастеров',
   aboutProgramDeveloper: 'Разработчик: ',
+  addClientFormNameTitle: 'Имя *',
+  addClientFormServiceTitle: 'Услуга *',
+  addClientFormPhoneTitle: 'Телефон *',
+  addClientFormNameHint: 'Пожалуйста, введите имя',
+  addClientFormServiceHint: 'Пожалуйста, введите услугу',
+  addClientFormPhoneHint: 'Пожалуйста, введите номер телефона',
+  addClientFormBtnCancel: 'Отмена',
 };

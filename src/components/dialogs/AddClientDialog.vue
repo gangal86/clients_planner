@@ -7,10 +7,10 @@
             <q-input
               outlined
               v-model="clientName"
-              label="Имя *"
+              :label="$t('addClientFormNameTitle')"
               lazy-rules
               :rules="[
-                (val) => (val && val.length > 0) || 'Пожалуйста, введите имя',
+                (val) => (val && val.length > 0) || $t('addClientFormNameHint'),
               ]"
             />
 
@@ -18,22 +18,22 @@
               outlined
               v-model="clientService"
               :options="servicesOptions"
-              label="Услуга *"
+              :label="$t('addClientFormServiceTitle')"
               :rules="[
                 (val) =>
-                  (val && val.length > 0) || 'Пожалуйста, введите услугу',
+                  (val && val.length > 0) || $t('addClientFormServiceHint'),
               ]"
             />
 
             <q-input
               outlined
               v-model="clientPhone"
-              label="Телефон *"
+              :label="$t('addClientFormPhoneTitle')"
               lazy-rules
               :rules="[
                 (val) =>
                   (val && val.length > 0) ||
-                  'Пожалуйста, введите номер телефона',
+                  $t('addClientFormPhoneHint'),
               ]"
             />
 
@@ -62,7 +62,7 @@
             <div>
               <q-btn label="Ok" color="primary" type="submit" />
               <q-btn
-                label="Отмена"
+                :label="$t('addClientFormBtnCancel')"
                 color="primary"
                 flat
                 class="q-ml-sm"

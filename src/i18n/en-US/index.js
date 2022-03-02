@@ -18,4 +18,11 @@ export default {
   btnTitleAddService: 'Add service',
   aboutProgramDescription: 'Accounting and working with clients, a schedule for masters',
   aboutProgramDeveloper: 'Developer: ',
+  addClientFormNameTitle: 'Name *',
+  addClientFormServiceTitle: 'Service *',
+  addClientFormPhoneTitle: 'Phone *',
+  addClientFormNameHint: 'Please enter a name',
+  addClientFormServiceHint: 'Please enter a service',
+  addClientFormPhoneHint: 'Please enter a phone number',
+  addClientFormBtnCancel: 'Cancel',
 };
