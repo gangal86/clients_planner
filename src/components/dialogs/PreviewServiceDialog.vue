@@ -19,14 +19,14 @@
       </q-card-section>
       <q-card-section class="row justify-center q-pt-none q-pb-sm">
         <q-btn
-          label="Изменить"
+          :label="$t('previewServiceBtnEdit')"
           color="primary"
           class="q-mr-sm"
           @click="showEditServiceDialog"
           no-caps
         />
         <q-btn
-          label="Удалить"
+          :label="$t('previewServiceBtnDelete')"
           color="negative"
           @click="deleteService"
           no-caps
@@ -39,6 +39,7 @@
 <script>
 import { defineComponent, computed } from 'vue';
 import { useStore } from 'vuex';
+import { useI18n } from 'vue-i18n';
 
 export default defineComponent({
   name: 'PreviewServiceDialog',
@@ -46,6 +47,7 @@ export default defineComponent({
   emits: ['update:modelValue', 'update:isEditServiceDialog'],
   setup(props, context) {
     const store = useStore();
+    let { t } = useI18n({ useScope: 'global' });
     const previewColumns = [
       {
         name: 'name',
@@ -61,11 +63,11 @@ export default defineComponent({
 
     const previewRows = computed(() => [
       {
-        name: 'Услуга',
+        name: t('previewServiceServiceTitle'),
         value: currentServiceDataProp.value.name,
       },
       {
-        name: 'Цена',
+        name: t('previewServicePriceTitle'),
         value: currentServiceDataProp.value.price,
       },
     ]);

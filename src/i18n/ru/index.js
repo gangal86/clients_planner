@@ -48,4 +48,8 @@ export default {
   previewClientServiceTitle: 'Услуга',
   previewClientPhoneTitle: 'Телефон',
   previewClientDateTitle: 'Дата',
+  previewServiceBtnEdit: 'Изменить',
+  previewServiceBtnDelete: 'Удалить',
+  previewServiceServiceTitle: 'Услуга',
+  previewServicePriceTitle: 'Цена',
 };

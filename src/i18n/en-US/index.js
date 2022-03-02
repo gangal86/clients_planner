@@ -48,4 +48,8 @@ export default {
   previewClientServiceTitle: 'Service',
   previewClientPhoneTitle: 'Phone',
   previewClientDateTitle: 'Date',
+  previewServiceBtnEdit: 'Edit',
+  previewServiceBtnDelete: 'Delete',
+  previewServiceServiceTitle: 'Service',
+  previewServicePriceTitle: 'Price',
 };
