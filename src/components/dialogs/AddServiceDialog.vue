@@ -7,30 +7,30 @@
             <q-input
               outlined
               v-model="clientServiceName"
-              label="Услуга *"
+              :label="$t('addServiceFormServiceTitle')"
               lazy-rules
               :rules="[
                 (val) =>
                   (val && val.length > 0) ||
-                  'Пожалуйста, введите название услуги',
+                  $t('addServiceFormServiceHint'),
               ]"
             />
 
             <q-input
               outlined
               v-model="clientServicePrice"
-              label="Цена *"
+              :label="$t('addServiceFormPriceTitle')"
               lazy-rules
               :rules="[
                 (val) =>
-                  (val && val.length > 0) || 'Пожалуйста, введите цену услуги',
+                  (val && val.length > 0) || $t('addServiceFormPriceHint'),
               ]"
             />
 
             <div>
               <q-btn label="Ok" color="primary" type="submit" />
               <q-btn
-                label="Отмена"
+                :label="$t('addServiceFormBtnCancel')"
                 color="primary"
                 flat
                 class="q-ml-sm"

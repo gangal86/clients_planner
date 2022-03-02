@@ -25,4 +25,9 @@ export default {
   addClientFormServiceHint: 'Пожалуйста, введите услугу',
   addClientFormPhoneHint: 'Пожалуйста, введите номер телефона',
   addClientFormBtnCancel: 'Отмена',
+  addServiceFormServiceTitle: 'Услуга *',
+  addServiceFormPriceTitle: 'Цена *',
+  addServiceFormServiceHint: 'Пожалуйста, введите услугу',
+  addServiceFormPriceHint: 'Пожалуйста, введите цену услуги',
+  addServiceFormBtnCancel: 'Отмена',
 };
