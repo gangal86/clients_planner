@@ -119,6 +119,9 @@ const getters = {
   getCountryFlagStatus(state) {
     return state.countryFlagStatus;
   },
+  getCurrentLocale(state) {
+    return state.currentLocale;
+  },
 };
 
 export default {

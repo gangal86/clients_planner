@@ -73,6 +73,7 @@
                       v-model="clientDate"
                       :mask="currentDateFormat"
                       :locale="currentLocale"
+                      first-day-of-week="1"
                     >
                       <div class="row items-center justify-end">
                         <q-btn v-close-popup label="Ok" color="primary" flat />
@@ -101,7 +102,7 @@
 </template>
 
 <script>
-import { defineComponent, computed } from 'vue';
+import { defineComponent, computed, ref, watch } from 'vue';
 import { useStore } from 'vuex';
 import { date } from 'quasar';
 import { useExport } from '../../helpers/useExport';
@@ -117,7 +118,17 @@ export default defineComponent({
   setup(props, context) {
     const store = useStore();
     const { currentDateFormat } = useExport();
-    const { currentLocale } = useExport();
+    const { calendarLocaleRu, calendarLocaleEn } = useExport();
+    const currentLocale = ref('');
+
+    const stateCurrentLocale = computed(
+      () => store.getters['storeClients/getCurrentLocale']
+    );
+
+    stateCurrentLocale.value === 'ru'
+      ? (currentLocale.value = calendarLocaleRu)
+      : (currentLocale.value = calendarLocaleEn);
+
     const isEditClientDialog = computed({
       get() {
         return props.modelValue;
@@ -179,6 +190,15 @@ export default defineComponent({
       store.getters['storeClients/getAllClientsServices'].map(
         (item) => item.name
       )
+    );
+
+    watch(
+      () => stateCurrentLocale.value,
+      () => {
+        stateCurrentLocale.value === 'ru'
+          ? (currentLocale.value = calendarLocaleRu)
+          : (currentLocale.value = calendarLocaleEn);
+      }
     );
 
     const editClient = () => {

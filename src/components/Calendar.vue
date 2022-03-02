@@ -8,6 +8,7 @@
       @update:model-value="updateDate"
       ref="calendar"
       :locale="currentLocale"
+      first-day-of-week="1"
       class="col q-mt-md q-mx-md"
     />
   </div>
@@ -102,6 +103,7 @@ export default defineComponent({
   setup() {
     const store = useStore();
     const $q = useQuasar();
+    const { calendarLocaleRu, calendarLocaleEn } = useExport();
     let { t } = useI18n({ useScope: 'global' });
     const isEditClientDialog = ref(false);
     const isAddClientDialog = ref(false);
@@ -119,7 +121,15 @@ export default defineComponent({
         currentDateFormat
       )
     );
-    const { currentLocale } = useExport();
+    const currentLocale = ref('');
+
+    const stateCurrentLocale = computed(
+      () => store.getters['storeClients/getCurrentLocale']
+    );
+
+    stateCurrentLocale.value === 'ru'
+      ? (currentLocale.value = calendarLocaleRu)
+      : (currentLocale.value = calendarLocaleEn);
 
     const allClientsDates = computed(
       () => store.getters['storeClients/getAllClientsDates']
@@ -172,6 +182,15 @@ export default defineComponent({
           date.extractDate(dateNow.value, 'DD/MM/YYYY'),
           currentDateFormat
         );
+      }
+    );
+
+    watch(
+      () => stateCurrentLocale.value,
+      () => {
+        stateCurrentLocale.value === 'ru'
+          ? (currentLocale.value = calendarLocaleRu)
+          : (currentLocale.value = calendarLocaleEn);
       }
     );
 
