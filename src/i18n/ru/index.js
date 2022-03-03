@@ -68,4 +68,5 @@ export default {
   importExportBtnNotifyLoadNegative: 'Ошибка загрузки базы из файла',
   importExportBtnNotifySavePositive: 'База в файл сохранена',
   importExportBtnNotifySaveNegative: 'Ошибка сохранения базы в файл',
+  resetMainColorApp: 'Сбросить',
 };

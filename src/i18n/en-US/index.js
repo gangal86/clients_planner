@@ -68,4 +68,5 @@ export default {
   importExportBtnNotifyLoadNegative: 'Error loading database from file',
   importExportBtnNotifySavePositive: 'Database saved to file',
   importExportBtnNotifySaveNegative: 'Error saving database to file',
+  resetMainColorApp: 'Reset',
 };

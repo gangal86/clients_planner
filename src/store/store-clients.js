@@ -1,4 +1,7 @@
 import { LocalStorage } from 'quasar';
+import { useExport } from '../helpers/useExport';
+
+const { primaryHex } = useExport();
 
 const state = () => ({
   clients: LocalStorage.has('clients') ? LocalStorage.getItem('clients') : [],
@@ -7,7 +10,7 @@ const state = () => ({
     : [],
   mainColorApp: LocalStorage.has('mainColorApp')
     ? LocalStorage.getItem('mainColorApp')
-    : '#94137c',
+    : primaryHex,
   countryFlagStatus: LocalStorage.has('countryFlagStatus')
     ? LocalStorage.getItem('countryFlagStatus')
     : false,

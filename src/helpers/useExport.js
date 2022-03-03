@@ -1,4 +1,5 @@
 export function useExport() {
+  const primaryHex = '#94137c';
   const currentDateFormat = 'HH:mm - DD/MM/YYYY';
   const calendarLocaleRu = {
     days: 'Воскресенье_Понедельник_Вторник_Среда_Четверг_Пятница_Суббота'.split('_'),
@@ -14,6 +15,7 @@ export function useExport() {
   };
 
   return {
+    primaryHex,
     currentDateFormat,
     calendarLocaleRu,
     calendarLocaleEn,
