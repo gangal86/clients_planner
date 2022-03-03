@@ -5,36 +5,40 @@
         <q-card>
           <q-card-actions class="column text-center">
             <div class="text-subtitle1 text-secondary">
-              НА СТАРОМ УСТРОЙСТВЕ:
+              {{ $t('importExportDesc1') }}
             </div>
-            <div>Нажмите кнопку</div>
+            <div>{{ $t('importExportDesc2') }}</div>
             <q-btn
               @click="exportState"
               class="q-mb-sm"
               color="secondary"
-              label="Сохранить базу в файл"
+              :label="$t('importExportDesc6')"
             />
             <div class="q-mb-sm">
-              По итогу в папке
-              <span class="text-bold">Загрузки (Download)</span> будет создан
-              файл <span class="text-bold">clients_planner_backup.json</span>
+              {{ $t('importExportDesc3') }}
+              <span class="text-bold">{{ $t('importExportDesc4') }}</span
+              >{{ $t('importExportDesc5')
+              }}<span class="text-bold">clients_planner_backup.json</span>
             </div>
           </q-card-actions>
         </q-card>
         <q-card class="q-mt-md">
           <q-card-actions class="column text-center">
-            <div class="text-subtitle1 text-primary">НА НОВОМ УСТРОЙСТВЕ:</div>
-            <div class="q-mb-sm">
-              Перенесите ранее сохраненный файл
-              <span class="text-bold">clients_planner_backup.json</span> в папку
-              <span class="text-bold">Загрузки (Download)</span>
+            <div class="text-subtitle1 text-primary">
+              {{ $t('importExportDesc7') }}
             </div>
-            <div>Нажмите кнопку</div>
+            <div class="q-mb-sm">
+              {{ $t('importExportDesc8') }}
+              <span class="text-bold">clients_planner_backup.json</span
+              >{{ $t('importExportDesc9') }}
+              <span class="text-bold">{{ $t('importExportDesc10') }}</span>
+            </div>
+            <div>{{ $t('importExportDesc11') }}</div>
             <q-btn
               @click="importState"
               class="q-mb-sm"
               color="primary"
-              label="Загрузить базу из файла"
+              :label="$t('importExportDesc12')"
             />
           </q-card-actions>
         </q-card>
@@ -50,6 +54,7 @@
 import { defineComponent, computed } from 'vue';
 import { useStore } from 'vuex';
 import { useQuasar } from 'quasar';
+import { useI18n } from 'vue-i18n';
 
 export default defineComponent({
   name: 'ImportExportDialog',
@@ -58,6 +63,7 @@ export default defineComponent({
   setup(props, context) {
     const store = useStore();
     const $q = useQuasar();
+    let { t } = useI18n({ useScope: 'global' });
     const state = JSON.stringify(store.getters['storeClients/getState']);
     const backupFile = 'clients_planner_backup.json';
     let backupPath = '';
@@ -85,7 +91,7 @@ export default defineComponent({
           function () {
             $q.notify({
               type: 'negative',
-              message: 'Ошибка загрузки базы из файла',
+              message: t('importExportBtnNotifyLoadNegative'),
             });
           }
         );
@@ -110,7 +116,7 @@ export default defineComponent({
           isImportExport.value = false;
           $q.notify({
             type: 'positive',
-            message: 'База из файла загружена',
+            message: t('importExportBtnNotifyLoadPositive'),
           });
         };
 
@@ -124,14 +130,14 @@ export default defineComponent({
           isImportExport.value = false;
           $q.notify({
             type: 'positive',
-            message: 'База в файл сохранена',
+            message: t('importExportBtnNotifySavePositive'),
           });
         };
 
         fileWriter.onerror = function () {
           $q.notify({
             type: 'negative',
-            message: 'Ошибка сохранения базы в файл',
+            message: t('importExportBtnNotifySaveNegative'),
           });
         };
 
