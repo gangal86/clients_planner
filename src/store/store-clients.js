@@ -7,7 +7,7 @@ const state = () => ({
     : [],
   mainColorApp: LocalStorage.has('mainColorApp')
     ? LocalStorage.getItem('mainColorApp')
-    : '#7A1FA2',
+    : '#94137c',
   countryFlagStatus: LocalStorage.has('countryFlagStatus')
     ? LocalStorage.getItem('countryFlagStatus')
     : false,

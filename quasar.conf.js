@@ -140,9 +140,9 @@ module.exports = configure(function (ctx) {
       },
 
       manifest: {
-        name: `Quasar App`,
-        short_name: `Quasar App`,
-        description: `A Quasar Framework app`,
+        name: `Clients Planner`,
+        short_name: `Clients Planner`,
+        description: `Accounting and working with clients, a schedule for masters`,
         display: 'standalone',
         orientation: 'portrait',
         background_color: '#ffffff',
