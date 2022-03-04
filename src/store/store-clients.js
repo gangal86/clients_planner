@@ -1,4 +1,4 @@
-import { LocalStorage } from 'quasar';
+import { LocalStorage, setCssVar } from 'quasar';
 import { useExport } from '../helpers/useExport';
 
 const { primaryHex } = useExport();
@@ -53,8 +53,12 @@ const mutations = {
   },
   importState(state, payload) {
     Object.assign(state, payload);
+    setCssVar('primary', state.mainColorApp);
     LocalStorage.set('clients', state.clients);
     LocalStorage.set('services', state.services);
+    LocalStorage.set('mainColorApp', state.mainColorApp);
+    LocalStorage.set('countryFlagStatus', state.countryFlagStatus);
+    LocalStorage.set('currentLocale', state.currentLocale);
   },
   updateMainColorApp(state, payload) {
     state.mainColorApp = payload;

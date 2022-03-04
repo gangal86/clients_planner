@@ -64,7 +64,6 @@ export default defineComponent({
     const store = useStore();
     const $q = useQuasar();
     let { t } = useI18n({ useScope: 'global' });
-    const state = JSON.stringify(store.getters['storeClients/getState']);
     const backupFile = 'clients_planner_backup.json';
     let backupPath = '';
     if ($q.platform.is.cordova) {
@@ -79,6 +78,8 @@ export default defineComponent({
         context.emit('update:modelValue', val);
       },
     });
+
+    const state = computed(() => JSON.stringify(store.getters['storeClients/getState']));
 
     const importState = () => {
       window.resolveLocalFileSystemURL(backupPath, function (dir) {
@@ -101,7 +102,7 @@ export default defineComponent({
     const exportState = () => {
       window.resolveLocalFileSystemURL(backupPath, function (dir) {
         dir.getFile(backupFile, { create: true }, function (fileEntry) {
-          const dataObj = new Blob([state], { type: 'application/json' });
+          const dataObj = new Blob([state.value], { type: 'application/json' });
           exportBackupFile(fileEntry, dataObj);
         });
       });
