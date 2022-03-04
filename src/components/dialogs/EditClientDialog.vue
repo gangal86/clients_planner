@@ -14,7 +14,8 @@
               :label="$t('editClientFormNameTitle')"
               lazy-rules
               :rules="[
-                (val) => (val && val.length > 0) || $t('editClientFormNameHint'),
+                (val) =>
+                  (val && val.length > 0) || $t('editClientFormNameHint'),
               ]"
             />
 
@@ -36,8 +37,7 @@
               lazy-rules
               :rules="[
                 (val) =>
-                  (val && val.length > 0) ||
-                  $t('editClientFormPhoneHint'),
+                  (val && val.length > 0) || $t('editClientFormPhoneHint'),
               ]"
             />
 
@@ -104,7 +104,8 @@
 <script>
 import { defineComponent, computed, ref, watch } from 'vue';
 import { useStore } from 'vuex';
-import { date } from 'quasar';
+import { date, useQuasar } from 'quasar';
+import { useI18n } from 'vue-i18n';
 import { useExport } from '../../helpers/useExport';
 
 export default defineComponent({
@@ -117,6 +118,8 @@ export default defineComponent({
   ],
   setup(props, context) {
     const store = useStore();
+    const $q = useQuasar();
+    let { t } = useI18n({ useScope: 'global' });
     const { currentDateFormat } = useExport();
     const { calendarLocaleRu, calendarLocaleEn } = useExport();
     const currentLocale = ref('');
@@ -217,6 +220,10 @@ export default defineComponent({
       store.dispatch('storeClients/editClient', dataEditClient);
       isEditClientDialog.value = false;
       context.emit('update:isPreviewClientDialog', false);
+      $q.notify({
+        type: 'positive',
+        message: t('editClientFormNotifyPositive'),
+      });
     };
 
     return {

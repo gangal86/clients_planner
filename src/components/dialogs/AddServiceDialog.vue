@@ -11,8 +11,7 @@
               lazy-rules
               :rules="[
                 (val) =>
-                  (val && val.length > 0) ||
-                  $t('addServiceFormServiceHint'),
+                  (val && val.length > 0) || $t('addServiceFormServiceHint'),
               ]"
             />
 
@@ -47,7 +46,8 @@
 <script>
 import { defineComponent, ref, computed } from 'vue';
 import { useStore } from 'vuex';
-import { uid } from 'quasar';
+import { uid, useQuasar } from 'quasar';
+import { useI18n } from 'vue-i18n';
 
 export default defineComponent({
   name: 'AddServiceDialog',
@@ -55,6 +55,8 @@ export default defineComponent({
   emits: ['update:modelValue'],
   setup(props, context) {
     const store = useStore();
+    const $q = useQuasar();
+    let { t } = useI18n({ useScope: 'global' });
     const clientServiceName = ref('');
     const clientServicePrice = ref('');
 
@@ -75,6 +77,10 @@ export default defineComponent({
       };
       store.dispatch('storeClients/addService', dataService);
       resetForm();
+      $q.notify({
+        type: 'positive',
+        message: t('addServiceFormNotifyPositive'),
+      });
     };
 
     const resetForm = () => {

@@ -32,8 +32,7 @@
               lazy-rules
               :rules="[
                 (val) =>
-                  (val && val.length > 0) ||
-                  $t('addClientFormPhoneHint'),
+                  (val && val.length > 0) || $t('addClientFormPhoneHint'),
               ]"
             />
 
@@ -79,7 +78,8 @@
 <script>
 import { defineComponent, computed, ref } from 'vue';
 import { useStore } from 'vuex';
-import { date, uid } from 'quasar';
+import { useI18n } from 'vue-i18n';
+import { date, uid, useQuasar } from 'quasar';
 import { useExport } from '../../helpers/useExport';
 
 export default defineComponent({
@@ -88,6 +88,8 @@ export default defineComponent({
   emits: ['update:modelValue', 'update:clientDate'],
   setup(props, context) {
     const store = useStore();
+    const $q = useQuasar();
+    let { t } = useI18n({ useScope: 'global' });
     const clientName = ref('');
     const clientService = ref('');
     const clientPhone = ref('');
@@ -141,6 +143,10 @@ export default defineComponent({
       };
       store.dispatch('storeClients/addClient', dataClient);
       resetForm();
+      $q.notify({
+        type: 'positive',
+        message: t('addClientFormNotifyPositive'),
+      });
     };
 
     return {

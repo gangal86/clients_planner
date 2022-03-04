@@ -15,8 +15,7 @@
               lazy-rules
               :rules="[
                 (val) =>
-                  (val && val.length > 0) ||
-                  $t('editClientFormServiceHint'),
+                  (val && val.length > 0) || $t('editClientFormServiceHint'),
               ]"
             />
 
@@ -51,6 +50,8 @@
 <script>
 import { defineComponent, computed } from 'vue';
 import { useStore } from 'vuex';
+import { useI18n } from 'vue-i18n';
+import { useQuasar } from 'quasar';
 
 export default defineComponent({
   name: 'EditServiceDialog',
@@ -62,6 +63,8 @@ export default defineComponent({
   ],
   setup(props, context) {
     const store = useStore();
+    const $q = useQuasar();
+    let { t } = useI18n({ useScope: 'global' });
 
     const isEditServiceDialog = computed({
       get() {
@@ -108,6 +111,10 @@ export default defineComponent({
       store.dispatch('storeClients/editService', dataEditService);
       isEditServiceDialog.value = false;
       context.emit('update:isPreviewServiceDialog', false);
+      $q.notify({
+        type: 'positive',
+        message: t('editServiceFormNotifyPositive'),
+      });
     };
 
     return {
