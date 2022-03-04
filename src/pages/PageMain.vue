@@ -25,7 +25,9 @@
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref, watch, computed } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { useStore } from 'vuex';
 import ClientsList from 'components/ClientsList.vue';
 import ServicesList from 'src/components/ServicesList.vue';
 import Calendar from 'components/Calendar.vue';
@@ -44,8 +46,32 @@ export default defineComponent({
     Footer,
   },
   setup() {
+    const store = useStore();
+    let { locale } = useI18n({ useScope: 'global' });
+    const lang = ref(locale);
+    const mainMenuTabs = ref('clients');
+    const stateCurrentLocale = computed(
+      () => store.getters['storeClients/getCurrentLocale']
+    );
+
+    watch(
+      () => stateCurrentLocale.value,
+      () => {
+        if (stateCurrentLocale.value === 'ru') {
+          lang.value = 'ru';
+        } else {
+          lang.value = 'en-us';
+        }
+      }
+    );
+
+    watch(() => lang.value, () => {
+      locale = lang.value;
+    });
+
     return {
-      mainMenuTabs: ref('clients'),
+      mainMenuTabs,
+      lang,
     };
   },
 });

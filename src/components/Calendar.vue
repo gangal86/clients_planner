@@ -104,8 +104,7 @@ export default defineComponent({
     const store = useStore();
     const $q = useQuasar();
     const { calendarLocaleRu, calendarLocaleEn } = useExport();
-    let { t, locale } = useI18n({ useScope: 'global' });
-    const lang = ref(locale);
+    let { t } = useI18n({ useScope: 'global' });
     const isEditClientDialog = ref(false);
     const isAddClientDialog = ref(false);
     const isPreviewClientDialog = ref(false);
@@ -189,20 +188,9 @@ export default defineComponent({
     watch(
       () => stateCurrentLocale.value,
       () => {
-        if (stateCurrentLocale.value === 'ru') {
-          lang.value = 'ru';
-          currentLocale.value = calendarLocaleRu;
-        } else {
-          lang.value = 'en-us';
-          currentLocale.value = calendarLocaleEn;
-        }
-      }
-    );
-
-    watch(
-      () => lang.value,
-      () => {
-        locale = lang.value;
+        stateCurrentLocale.value === 'ru'
+          ? (currentLocale.value = calendarLocaleRu)
+          : (currentLocale.value = calendarLocaleEn);
       }
     );
 
