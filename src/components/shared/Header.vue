@@ -1,9 +1,13 @@
 <template>
-  <q-header bordered class="bg-white text-grey-9">
+  <q-header bordered class="bg-white text-primary">
     <q-toolbar>
-      <q-toolbar-title class="row justify-center text-dark toolbar-title">
-        <div v-if="mainMenuTabs == 'clients'">{{ $t('headerTitleClients') }}</div>
-        <div v-if="mainMenuTabs == 'services'">{{ $t('headerTitleServices') }}</div>
+      <q-toolbar-title class="row justify-center text-primary toolbar-title">
+        <div v-if="mainMenuTabs == 'clients'">
+          {{ $t('headerTitleClients') }}
+        </div>
+        <div v-if="mainMenuTabs == 'services'">
+          {{ $t('headerTitleServices') }}
+        </div>
         <div v-if="mainMenuTabs == 'search'">{{ $t('headerTitleSearch') }}</div>
         <div v-if="mainMenuTabs == 'more'">{{ $t('headerTitleMore') }}</div>
       </q-toolbar-title>
