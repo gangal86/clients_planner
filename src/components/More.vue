@@ -1,20 +1,26 @@
 <template>
-  <div class="column no-wrap justify-center q-mt-md">
-    <div class="column items-center">{{ $t('titleChangeColorScheme') }}</div>
-    <div class="q-pa-md column items-center">
-      <q-color v-model="mainColorApp" class="no-header no-footer my-picker" />
+  <transition
+    appear
+    enter-active-class="animated zoomIn"
+    leave-active-class="animated zoomOut"
+  >
+    <div class="column no-wrap justify-center q-mt-md">
+      <div class="column items-center">{{ $t('titleChangeColorScheme') }}</div>
+      <div class="q-pa-md column items-center">
+        <q-color v-model="mainColorApp" class="no-header no-footer my-picker" />
+      </div>
+      <div class="column items-center">
+        <q-btn
+          class="reset"
+          color="primary"
+          :label="$t('resetMainColorApp')"
+          no-caps
+          push
+          @click="resetMainColorApp"
+        />
+      </div>
     </div>
-    <div class="column items-center">
-      <q-btn
-        class="reset"
-        color="primary"
-        :label="$t('resetMainColorApp')"
-        no-caps
-        push
-        @click="resetMainColorApp"
-      />
-    </div>
-  </div>
+  </transition>
 </template>
 
 <script>

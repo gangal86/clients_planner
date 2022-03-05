@@ -1,39 +1,56 @@
 <template>
-  <div class="row justify-center q-mt-md">
-    <q-btn
-      no-caps
-      outline
-      rounded
-      color="primary"
-      icon="add"
-      :label="$t('btnTitleAddService')"
-      @click="isAddServiceDialog = true"
-    />
-  </div>
+  <transition
+    appear
+    enter-active-class="animated zoomIn"
+    leave-active-class="animated zoomOut"
+  >
+    <div>
+      <div class="row justify-center q-mt-md">
+        <q-btn
+          no-caps
+          outline
+          rounded
+          color="primary"
+          icon="add"
+          :label="$t('btnTitleAddService')"
+          @click="isAddServiceDialog = true"
+        />
+      </div>
+      <q-list separator class="q-my-md">
+        <template v-for="service in services" :key="service.id">
+          <transition
+            appear
+            enter-active-class="animated zoomIn"
+            leave-active-class="animated zoomOut"
+          >
+            <q-item
+              @click="showPreviewServiceDialog(service.id)"
+              clickable
+              v-ripple
+            >
+              <q-item-section v-if="services.length > 0" avatar>
+                <q-avatar color="primary" text-color="white">
+                  {{ service.name.charAt(0) }}
+                </q-avatar>
+              </q-item-section>
 
-  <q-list separator class="q-my-md">
-    <template v-for="service in services" :key="service.id">
-      <q-item @click="showPreviewServiceDialog(service.id)" clickable v-ripple>
-        <q-item-section v-if="services.length > 0" avatar>
-          <q-avatar color="primary" text-color="white">
-            {{ service.name.charAt(0) }}
-          </q-avatar>
-        </q-item-section>
+              <q-item-section>
+                <q-item-label class="text-primary">{{
+                  service.name.substring(0, 33)
+                }}</q-item-label>
+              </q-item-section>
 
-        <q-item-section>
-          <q-item-label class="text-primary">{{
-            service.name.substring(0, 33)
-          }}</q-item-label>
-        </q-item-section>
-
-        <q-item-section side>
-          <q-item-label class="text-dark">{{
-            service.price.substring(0, 15)
-          }}</q-item-label>
-        </q-item-section>
-      </q-item>
-    </template>
-  </q-list>
+              <q-item-section side>
+                <q-item-label class="text-dark">{{
+                  service.price.substring(0, 15)
+                }}</q-item-label>
+              </q-item-section>
+            </q-item>
+          </transition>
+        </template>
+      </q-list>
+    </div>
+  </transition>
 
   <AddServiceDialog v-model="isAddServiceDialog" />
 

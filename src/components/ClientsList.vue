@@ -1,50 +1,56 @@
 <template>
-  <q-list separator class="q-my-md">
-    <q-input
-      outlined
-      bottom-slots
-      v-model="searchText"
-      :label="$t('searchTitleEnterClientName')"
-    >
-      <template v-slot:append>
-        <q-icon
-          v-if="searchText !== ''"
-          name="close"
-          @click="searchText = ''"
-          class="cursor-pointer"
-        />
-        <q-icon name="search" />
-      </template>
-    </q-input>
-    <q-item
-      v-for="client in allClients"
-      :key="client.id"
-      @click="showPreviewClientDialog(client.id)"
-      clickable
-      v-ripple
-    >
-      <q-item-section v-if="allClients.length > 0" avatar>
-        <q-avatar color="primary" text-color="white">
-          {{ client.name.charAt(0) }}
-        </q-avatar>
-      </q-item-section>
+  <transition
+    appear
+    enter-active-class="animated zoomIn"
+    leave-active-class="animated zoomOut"
+  >
+    <q-list separator class="q-my-md">
+      <q-input
+        outlined
+        bottom-slots
+        v-model="searchText"
+        :label="$t('searchTitleEnterClientName')"
+      >
+        <template v-slot:append>
+          <q-icon
+            v-if="searchText !== ''"
+            name="close"
+            @click="searchText = ''"
+            class="cursor-pointer"
+          />
+          <q-icon name="search" />
+        </template>
+      </q-input>
+      <q-item
+        v-for="client in allClients"
+        :key="client.id"
+        @click="showPreviewClientDialog(client.id)"
+        clickable
+        v-ripple
+      >
+        <q-item-section v-if="allClients.length > 0" avatar>
+          <q-avatar color="primary" text-color="white">
+            {{ client.name.charAt(0) }}
+          </q-avatar>
+        </q-item-section>
 
-      <q-item-section>
-        <q-item-label class="text-primary">{{
-          client.name.substring(0, 20)
-        }}</q-item-label>
-        <q-item-label caption lines="1" class="text-dark">{{
-          client.date
-        }}</q-item-label>
-      </q-item-section>
+        <q-item-section>
+          <q-item-label class="text-primary">{{
+            client.name.substring(0, 20)
+          }}</q-item-label>
+          <q-item-label caption lines="1" class="text-dark">{{
+            client.date
+          }}</q-item-label>
+        </q-item-section>
 
-      <q-item-section side>
-        <q-item-label class="text-dark">{{
-          client.service.substring(0, 15)
-        }}</q-item-label>
-      </q-item-section>
-    </q-item>
-  </q-list>
+        <q-item-section side>
+          <q-item-label class="text-dark">{{
+            client.service.substring(0, 15)
+          }}</q-item-label>
+        </q-item-section>
+      </q-item>
+    </q-list>
+  </transition>
 
   <PreviewClientDialog
     v-model="isPreviewClientDialog"

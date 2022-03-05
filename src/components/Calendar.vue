@@ -1,67 +1,81 @@
 <template>
-  <div class="row justify-center">
-    <q-date
-      v-model="dateNow"
-      mask="DD/MM/YYYY"
-      :events="allClientsDates"
-      event-color="orange"
-      @update:model-value="updateDate"
-      ref="calendar"
-      :locale="currentLocale"
-      first-day-of-week="1"
-      class="col q-mt-md q-mx-md"
-    />
-  </div>
-
-  <q-card
-    class="q-mx-md"
-    v-touch-swipe.mouse.right.left="calendarCardHasSwiped"
+  <transition
+    appear
+    enter-active-class="animated zoomIn"
+    leave-active-class="animated zoomOut"
   >
-    <q-card-section>
+    <div>
       <div class="row justify-center">
-        <q-btn
-          no-caps
-          outline
-          rounded
-          color="primary"
-          icon="add"
-          :label="$t('btnTitleAddClient')"
-          @click="showAddClientDialog"
+        <q-date
+          v-model="dateNow"
+          mask="DD/MM/YYYY"
+          :events="allClientsDates"
+          event-color="orange"
+          @update:model-value="updateDate"
+          ref="calendar"
+          :locale="currentLocale"
+          first-day-of-week="1"
+          class="col q-mt-md q-mx-md"
         />
       </div>
-      <q-list separator class="q-my-xs">
-        <template v-for="client in allClients" :key="client.id">
-          <q-item
-            v-if="client.date === dateNow"
-            @click="showPreviewClientDialog(client.id)"
-            clickable
-            v-ripple
-          >
-            <q-item-section v-if="allClients.length > 0" avatar>
-              <q-avatar color="primary" text-color="white">
-                {{ client.name.charAt(0) }}
-              </q-avatar>
-            </q-item-section>
 
-            <q-item-section>
-              <q-item-label class="text-primary">{{
-                client.name.substring(0, 20)
-              }}</q-item-label>
-              <q-item-label caption lines="1" class="text-dark">{{
-                client.dateCurrentFormat
-              }}</q-item-label>
-            </q-item-section>
+      <q-card
+        class="q-mx-md"
+        v-touch-swipe.mouse.right.left="calendarCardHasSwiped"
+      >
+        <q-card-section>
+          <div class="row justify-center">
+            <q-btn
+              no-caps
+              outline
+              rounded
+              color="primary"
+              icon="add"
+              :label="$t('btnTitleAddClient')"
+              @click="showAddClientDialog"
+            />
+          </div>
+          <q-list separator class="q-my-xs">
+            <template v-for="client in allClients" :key="client.id">
+              <transition
+                appear
+                enter-active-class="animated zoomIn"
+                leave-active-class="animated zoomOut"
+              >
+                <q-item
+                  v-if="client.date === dateNow"
+                  @click="showPreviewClientDialog(client.id)"
+                  clickable
+                  v-ripple
+                >
+                  <q-item-section v-if="allClients.length > 0" avatar>
+                    <q-avatar color="primary" text-color="white">
+                      {{ client.name.charAt(0) }}
+                    </q-avatar>
+                  </q-item-section>
 
-            <q-item-section side>
-              <q-item-label class="text-dark">{{
-                client.service.substring(0, 15)
-              }}</q-item-label>
-            </q-item-section>
-          </q-item>
-        </template>
-      </q-list>
-    </q-card-section>
-  </q-card>
+                  <q-item-section>
+                    <q-item-label class="text-primary">{{
+                      client.name.substring(0, 20)
+                    }}</q-item-label>
+                    <q-item-label caption lines="1" class="text-dark">{{
+                      client.dateCurrentFormat
+                    }}</q-item-label>
+                  </q-item-section>
+
+                  <q-item-section side>
+                    <q-item-label class="text-dark">{{
+                      client.service.substring(0, 15)
+                    }}</q-item-label>
+                  </q-item-section>
+                </q-item>
+              </transition>
+            </template>
+          </q-list>
+        </q-card-section>
+      </q-card>
+    </div>
+  </transition>
 
   <PreviewClientDialog
     v-model="isPreviewClientDialog"
