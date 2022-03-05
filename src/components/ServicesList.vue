@@ -17,12 +17,12 @@
         />
       </div>
       <q-list separator class="q-my-md">
-        <template v-for="service in services" :key="service.id">
-          <transition
-            appear
-            enter-active-class="animated zoomIn"
-            leave-active-class="animated zoomOut"
-          >
+        <transition-group
+          appear
+          enter-active-class="animated zoomIn"
+          leave-active-class="animated zoomOut"
+        >
+          <template v-for="service in services" :key="service.id">
             <q-item
               @click="showPreviewServiceDialog(service.id)"
               clickable
@@ -46,8 +46,8 @@
                 }}</q-item-label>
               </q-item-section>
             </q-item>
-          </transition>
-        </template>
+          </template>
+        </transition-group>
       </q-list>
     </div>
   </transition>

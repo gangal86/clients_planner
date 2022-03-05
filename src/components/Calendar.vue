@@ -36,12 +36,12 @@
             />
           </div>
           <q-list separator class="q-my-xs">
-            <template v-for="client in allClients" :key="client.id">
-              <transition
-                appear
-                enter-active-class="animated zoomIn"
-                leave-active-class="animated zoomOut"
-              >
+            <transition-group
+              appear
+              enter-active-class="animated zoomIn"
+              leave-active-class="animated zoomOut"
+            >
+              <template v-for="client in allClients" :key="client.id">
                 <q-item
                   v-if="client.date === dateNow"
                   @click="showPreviewClientDialog(client.id)"
@@ -69,8 +69,8 @@
                     }}</q-item-label>
                   </q-item-section>
                 </q-item>
-              </transition>
-            </template>
+              </template>
+            </transition-group>
           </q-list>
         </q-card-section>
       </q-card>
