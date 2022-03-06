@@ -2,8 +2,8 @@
 <widget id="gangal.pro.clients.planner" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Clients Planner</name>
     <description>Accounting and working with clients, a schedule for masters</description>
-    <author email="dev@cordova.apache.org" href="http://cordova.io">
-        Apache Cordova Team
+    <author email="gangal33@gmail.com" href="https://gangal.pro">
+        Roman Gangal
     </author>
     <content src="index.html" />
     <access origin="*" />
