@@ -87,7 +87,9 @@ export default defineComponent({
           backupFile,
           { create: false },
           function (fileEntry) {
-            importBackupFile(fileEntry);
+            setTimeout(() => {
+              importBackupFile(fileEntry);
+            }, 100);
           },
           function () {
             $q.notify({
@@ -103,7 +105,9 @@ export default defineComponent({
       window.resolveLocalFileSystemURL(backupPath, function (dir) {
         dir.getFile(backupFile, { create: true }, function (fileEntry) {
           const dataObj = new Blob([state.value], { type: 'application/json' });
-          exportBackupFile(fileEntry, dataObj);
+          setTimeout(() => {
+            exportBackupFile(fileEntry, dataObj);
+          }, 100);
         });
       });
     };
