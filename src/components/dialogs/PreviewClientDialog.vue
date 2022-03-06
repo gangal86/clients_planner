@@ -25,7 +25,12 @@
           @click="showEditClientDialog"
           no-caps
         />
-        <q-btn :label="$t('previewClientBtnDelete')" color="negative" @click="deleteClient" no-caps />
+        <q-btn
+          :label="$t('previewClientBtnDelete')"
+          color="negative"
+          @click="deleteClient"
+          no-caps
+        />
       </q-card-section>
     </q-card>
   </q-dialog>
@@ -35,6 +40,7 @@
 import { defineComponent, computed } from 'vue';
 import { useStore } from 'vuex';
 import { useI18n } from 'vue-i18n';
+import { useQuasar } from 'quasar';
 
 export default defineComponent({
   name: 'PreviewClientDialog',
@@ -42,6 +48,7 @@ export default defineComponent({
   emits: ['update:modelValue', 'update:isEditClientDialog'],
   setup(props, context) {
     const store = useStore();
+    const $q = useQuasar();
     let { t } = useI18n({ useScope: 'global' });
     const previewColumns = [
       {
@@ -95,6 +102,10 @@ export default defineComponent({
     const deleteClient = () => {
       store.dispatch('storeClients/deleteClient', currentUserDataProp.value.id);
       context.emit('update:modelValue', false);
+      $q.notify({
+        type: 'positive',
+        message: t('previewClientDeleteNotifyPositive'),
+      });
     };
 
     return {

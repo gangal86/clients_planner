@@ -40,6 +40,7 @@
 import { defineComponent, computed } from 'vue';
 import { useStore } from 'vuex';
 import { useI18n } from 'vue-i18n';
+import { useQuasar } from 'quasar';
 
 export default defineComponent({
   name: 'PreviewServiceDialog',
@@ -47,6 +48,7 @@ export default defineComponent({
   emits: ['update:modelValue', 'update:isEditServiceDialog'],
   setup(props, context) {
     const store = useStore();
+    const $q = useQuasar();
     let { t } = useI18n({ useScope: 'global' });
     const previewColumns = [
       {
@@ -93,6 +95,10 @@ export default defineComponent({
         currentServiceDataProp.value.id
       );
       context.emit('update:modelValue', false);
+      $q.notify({
+        type: 'positive',
+        message: t('previewServiceDeleteNotifyPositive'),
+      });
     };
 
     return {
