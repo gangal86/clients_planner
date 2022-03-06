@@ -206,8 +206,20 @@ export default defineComponent({
 
     const editClient = () => {
       const extractDate = date.extractDate(clientDate.value, currentDateFormat);
+
       const formatDateToStore = date.formatDate(extractDate, 'YYYY/MM/DD');
       const formatTimeToStore = date.formatDate(extractDate, 'HH:mm');
+
+      if (
+        formatDateToStore === '1899/12/31' ||
+        !date.isValid(`${formatDateToStore} ${formatTimeToStore}`)
+      ) {
+        $q.notify({
+          type: 'negative',
+          message: t('editClientFormNotifyNegative'),
+        });
+        return;
+      }
 
       const dataEditClient = {
         id: props.currentUserData.id,

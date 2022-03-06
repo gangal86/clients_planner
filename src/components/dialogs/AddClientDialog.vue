@@ -130,8 +130,20 @@ export default defineComponent({
         clientDateProp.value,
         currentDateFormat
       );
+
       const formatDateToStore = date.formatDate(extractDate, 'YYYY/MM/DD');
       const formatTimeToStore = date.formatDate(extractDate, 'HH:mm');
+
+      if (
+        formatDateToStore === '1899/12/31' ||
+        !date.isValid(`${formatDateToStore} ${formatTimeToStore}`)
+      ) {
+        $q.notify({
+          type: 'negative',
+          message: t('addClientFormNotifyNegative'),
+        });
+        return;
+      }
 
       const dataClient = {
         id: uid(),
