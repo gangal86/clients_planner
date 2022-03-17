@@ -147,10 +147,10 @@ export default defineComponent({
 
       const dataClient = {
         id: uid(),
-        name: clientName.value,
+        name: clientName.value.trim(),
         date: formatDateToStore,
         time: formatTimeToStore,
-        phone: clientPhone.value,
+        phone: clientPhone.value.trim(),
         service: clientService.value,
       };
       store.dispatch('storeClients/addClient', dataClient);

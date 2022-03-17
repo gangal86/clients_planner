@@ -72,8 +72,8 @@ export default defineComponent({
     const addService = () => {
       const dataService = {
         id: uid(),
-        name: clientServiceName.value,
-        price: clientServicePrice.value,
+        name: clientServiceName.value.trim(),
+        price: clientServicePrice.value.trim(),
       };
       store.dispatch('storeClients/addService', dataService);
       resetForm();

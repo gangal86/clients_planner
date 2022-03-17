@@ -105,8 +105,8 @@ export default defineComponent({
     const editService = () => {
       const dataEditService = {
         id: props.currentServiceData.id,
-        name: serviceName.value,
-        price: servicePrice.value,
+        name: serviceName.value.trim(),
+        price: servicePrice.value.trim(),
       };
       store.dispatch('storeClients/editService', dataEditService);
       isEditServiceDialog.value = false;

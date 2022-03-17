@@ -223,10 +223,10 @@ export default defineComponent({
 
       const dataEditClient = {
         id: props.currentUserData.id,
-        name: clientName.value,
+        name: clientName.value.trim(),
         date: formatDateToStore,
         time: formatTimeToStore,
-        phone: clientPhone.value,
+        phone: clientPhone.value.trim(),
         service: clientService.value,
       };
       store.dispatch('storeClients/editClient', dataEditClient);
