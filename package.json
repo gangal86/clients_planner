@@ -1,20 +1,25 @@
 {
   "name": "clients_planner",
-  "version": "0.0.1",
-  "description": "A Quasar Framework app",
-  "productName": "Quasar App",
-  "author": "Roman Gangal <gangal33@gmail.com>",
+  "version": "1.0.0",
+  "description": "Accounting and working with clients, a schedule for masters",
+  "productName": "Clients Planner",
+  "author": "Roman Gangal https://gangal.pro",
   "private": true,
   "scripts": {
     "lint": "eslint --ext .js,.vue ./",
-    "test": "echo \"No test specified\" && exit 0"
+    "icons": "icongenie generate -i src/icon/icon_clients_planner.png -b src/icon/background_clients_planner.png --skip-trim --splashscreen-icon-ratio 0",
+    "android-dev": "quasar dev -m cordova -T android",
+    "android-build-apk": "quasar build -m cordova -T android -- --buildConfig=\"../build.cordova.json\" -- --packageType=apk",
+    "android-build-bundle": "quasar build -m cordova -T android -- --buildConfig=\"../build.cordova.json\" -- --packageType=bundle"
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
+    "lodash": "^4.17.21",
     "quasar": "^2.0.0",
-    "vue-i18n": "^9.0.0",
+    "vue-country-flag-next": "^2.3.2",
+    "vue-i18n": "^9.1.9",
     "vuex": "^4.0.1"
   },
   "devDependencies": {
