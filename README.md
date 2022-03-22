@@ -1,26 +1,15 @@
-# Quasar App (clients_planner)
+# Clients Planner
 
-Clients Planner
+<p>Accounting and working with clients, a schedule for masters.</p>
 
-## Install the dependencies
-```bash
-yarn
-```
-
-### Start the app in development mode (hot-code reloading, error reporting, etc.)
-```bash
-quasar dev
-```
-
-### Lint the files
-```bash
-yarn run lint
-```
-
-### Build the app for production
-```bash
-quasar build
-```
-
-### Customize the configuration
-See [Configuring quasar.conf.js](https://quasar.dev/quasar-cli/quasar-conf-js).
+<ul>
+  <li>
+    <a 
+      href="https://play.google.com/store/apps/details?id=gangal.pro.clients.planner" 
+      alt="Android-version (Google Play)" 
+      title="Android-version (Google Play)" 
+      target="_blank">
+      Android-version (Google Play)
+    </a>
+  </li>
+</ul>
